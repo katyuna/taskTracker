@@ -5,12 +5,15 @@ public class Task {
     String name;
     String description;
     String status;
+    String type;
+
 
     public Task() {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
+        this.type = type;
     }
 
     public Integer getId() {
@@ -49,4 +52,11 @@ public class Task {
         this.status = status;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
