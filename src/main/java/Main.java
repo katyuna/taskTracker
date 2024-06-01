@@ -3,10 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         TaskManager manager = new TaskManager();
-        System.out.println("Добро пожаловать в охуевший таск-трекер Катюнечки!");
-        System.out.println("Чем бы вы хотели заняться сейчас?");
         Scanner scanner = new Scanner(System.in);
-
         while (true) {
             printMenu();
             int userInput = scanner.nextInt();
@@ -31,7 +28,7 @@ public class Main {
             }else if (userInput == 3) {
                 //Создать Подзадачу.
                 manager.createSubtask();
-            }else if (userInput == 3.1) {
+            }else if (userInput == 31) {
                 //Добавить подзадачу в Эпик.
                 System.out.println("Введите ID эпика в который нужно добавить подзадачу.");
                 int epicId = scanner.nextInt();
@@ -49,7 +46,7 @@ public class Main {
         System.out.println("1 - Создать Задачу Task.");
         System.out.println("2 - Создать Эпик Epic.");
         System.out.println("3 - Создать Подзадачу Subtask.");
-        System.out.println("    3.1 - Добавить подзадачу в эпик");
+        System.out.println("    31 - Добавить подзадачу в эпик");
         System.out.println("4 - Показать список задач Task.");
         System.out.println("5 - Показать список задач Epic.");
         System.out.println("6 - Показать список всех подзадач Subtask.");

@@ -45,14 +45,35 @@ public class TaskManager {
     public void addSubtaskToEpicByIds(Integer epicId, Integer subtaskId){
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
             Integer epicKey = entry.getKey();
+            Epic epicValue = entry.getValue();
+            if (epicId == epicKey){
+                epicValue.listSubtasksInEpic = new ArrayList<>();
+                Subtask subtaskValue = subtaskHashMap.get(subtaskId);
+                epicValue.listSubtasksInEpic.add(subtaskValue);
+                //тепреь надо в сабтаску добавить эпик
+
+            }
+        }
+    }
+
+
+
+
+ /*   public void addSubtaskToEpicByIds(Integer epicId, Integer subtaskId){
+        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
+            Integer epicKey = entry.getKey();
             Epic epic = entry.getValue();
-            if (epicKey == epicId){
-                epic.listSubtasksInEpic.add(subtaskId);
-                for (Map.Entry<Integer, Subtask> oneMoreEntry : subtaskHashMap.entrySet()){
-                    Integer subtaskKey = oneMoreEntry.getKey();
-                    Subtask subtask = oneMoreEntry.getValue();
-                    if (subtaskKey == subtaskId){
-                        subtask.setEpicId(subtaskId);
+                if (epicId == epicKey){
+                    Epic currentEpic = epicHashMap.get(0);
+                    // Добавляем элемент в listSubtasksInEpic
+                    currentEpic.listSubtasksInEpic = new ArrayList<>();
+                        for(int i=0; i<currentEpic.listSubtasksInEpic.size(); i++){
+                            currentEpic.listSubtasksInEpic.add(i, subtaskId);
+                        }
+                        for (Map.Entry<Integer, Subtask> oneMoreEntry : subtaskHashMap.entrySet()){           Integer subtaskKey = oneMoreEntry.getKey();
+                          Subtask subtask = oneMoreEntry.getValue();
+                          if (subtaskId == subtaskKey){
+                              subtask.setEpicId(subtaskId);
                     }
                 }
             } else {
@@ -60,6 +81,7 @@ public class TaskManager {
             }
         }
     }
+  */
     //Получение списка всех задач
     public void getTasks() {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
@@ -72,14 +94,14 @@ public class TaskManager {
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
             Integer key = entry.getKey();
             Epic epic = entry.getValue();
-            System.out.println("ID " + key + ": " + epic.getName() + " | Subtasks: " + epic.listSubtasksInEpic);
+            System.out.println("ID " + key + ": " + epic.getName() + " | Subtasks in this Epic: " + epic.listSubtasksInEpic);
         }
     }
     public void getSubtasks() {
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
             Integer key = entry.getKey();
             Subtask subtask = entry.getValue();
-            System.out.println("ID " + key + ": " + subtask.getName() + "  | Epic: " + subtask.epicId);
+            System.out.println("ID " + key + ": " + subtask.getName() + "  | This Subtask in Epic: " + subtask.myEpic);
         }
     }
 
