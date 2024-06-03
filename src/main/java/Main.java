@@ -37,6 +37,12 @@ public class Main {
                 manager.addSubtaskToEpicByIds(epicId, subtaskId);
             } else if (userInput == 51) {
                 System.out.println("Введите ID эпика, для которого нужно получить список подзадач.");
+                int epicId = scanner.nextInt();
+                manager.getSubtasksByEpicId(epicId);
+            } else if (userInput == 7) {
+                System.out.println("Введите ID.");
+                int id = scanner.nextInt();
+                manager.getById(id);
             } else {
                 System.out.println("Выберите вариант из меню.");
             }
@@ -53,6 +59,7 @@ public class Main {
         System.out.println("5 - Показать список Epic.");
         System.out.println("    51 - Показать список подзадач Эпика.");
         System.out.println("6 - Показать список Subtask.");
+        System.out.println("7 - Вывести по id.");
         System.out.println("0 - Выход.");
     }
 }
