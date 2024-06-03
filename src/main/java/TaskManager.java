@@ -38,50 +38,21 @@ public class TaskManager {
         subtask.setStatus("NEW");
         subtask.setType("Subtask");
         subtaskHashMap.put(subtask.getId(), subtask);
-
     }
 
     //Добавить подзадачу в эпик
     public void addSubtaskToEpicByIds(Integer epicId, Integer subtaskId){
+
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
             Integer epicKey = entry.getKey();
             Epic epicValue = entry.getValue();
             if (epicId == epicKey){
-                epicValue.listSubtasksInEpic = new ArrayList<>();
                 Subtask subtaskValue = subtaskHashMap.get(subtaskId);
                 epicValue.listSubtasksInEpic.add(subtaskValue);
-                //тепреь надо в сабтаску добавить эпик
-
+                subtaskValue.setMyEpic(epicValue);
             }
         }
     }
-
-
-
-
- /*   public void addSubtaskToEpicByIds(Integer epicId, Integer subtaskId){
-        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
-            Integer epicKey = entry.getKey();
-            Epic epic = entry.getValue();
-                if (epicId == epicKey){
-                    Epic currentEpic = epicHashMap.get(0);
-                    // Добавляем элемент в listSubtasksInEpic
-                    currentEpic.listSubtasksInEpic = new ArrayList<>();
-                        for(int i=0; i<currentEpic.listSubtasksInEpic.size(); i++){
-                            currentEpic.listSubtasksInEpic.add(i, subtaskId);
-                        }
-                        for (Map.Entry<Integer, Subtask> oneMoreEntry : subtaskHashMap.entrySet()){           Integer subtaskKey = oneMoreEntry.getKey();
-                          Subtask subtask = oneMoreEntry.getValue();
-                          if (subtaskId == subtaskKey){
-                              subtask.setEpicId(subtaskId);
-                    }
-                }
-            } else {
-                System.out.println ("Эпика с таким Id не существует");
-            }
-        }
-    }
-  */
     //Получение списка всех задач
     public void getTasks() {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
@@ -105,11 +76,14 @@ public class TaskManager {
         }
     }
 
+    //Получение всех подзадач эпика
+
+    //Получение задачи по id
+
     //Удаление всех задач
 
     //Удаление задачи по id
 
-    //Получение задачи по id
 
     //Обновление задач. Новая версия объекта и id передаются в виде параметра
     public void updateTask (Task task){
@@ -121,8 +95,6 @@ public class TaskManager {
     public void updateSubtask (Subtask subtask){
 
     }
-
-    //Получение всех подзадач эпика
 
     //Управление статусами
 }
