@@ -43,6 +43,13 @@ public class Main {
                 System.out.println("Введите ID.");
                 int id = scanner.nextInt();
                 manager.getById(id);
+            } else if (userInput == 8) {
+                System.out.println("Введите ID для удаления.");
+                int id = scanner.nextInt();
+                manager.deleteById(id);
+            } else if (userInput == 9) {
+                System.out.println("Все удалено!.");
+                manager.deleteAll();
             } else {
                 System.out.println("Выберите вариант из меню.");
             }
@@ -60,6 +67,8 @@ public class Main {
         System.out.println("    51 - Показать список подзадач Эпика.");
         System.out.println("6 - Показать список Subtask.");
         System.out.println("7 - Вывести по id.");
+        System.out.println("8 - Удалить по id.");
+        System.out.println("9 - Удалить все.");
         System.out.println("0 - Выход.");
     }
 }

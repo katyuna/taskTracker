@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class TaskManager {
@@ -81,15 +82,14 @@ public class TaskManager {
             Integer epicKey = entry.getKey();
             Epic epicValue = entry.getValue();
             if (epicId == epicKey){
-                System.out.println("Список подзадач для эпика ID " + epicId + ". Name: " + epicValue.getName());
+                System.out.println("Список подзадач для эпика (ID" + epicId + ")");
                 for (int i =0; i<epicValue.listSubtasksInEpic.size(); i++){
                     System.out.println(epicValue.listSubtasksInEpic.get(i).getId() + ": " + epicValue.listSubtasksInEpic.get(i).getName());
                 }
             }
 
-            }
+        }
     }
-
     //Получение задачи по id
     public void getById (Integer id){
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
@@ -106,6 +106,7 @@ public class TaskManager {
                 if (id == epicKey) {
                     System.out.println("Type: " + epicValue.getType() + ". Status: " + epicValue.getStatus() + ". ID " + epicKey + ". Name: " + epicValue.getName());
                     System.out.println("Description: " + epicValue.getDescription());
+                    getSubtasksByEpicId(epicKey);
                 }
             }
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
@@ -114,17 +115,43 @@ public class TaskManager {
             if (id == subtaskKey) {
                 System.out.println("Type: " + subtaskValue.getType() + ". Status: " + subtaskValue.getStatus() + ". ID " + subtaskKey + ". Name: " + subtaskValue.getName());
                 System.out.println("Description: " + subtaskValue.getDescription());
+                System.out.println("Located in Epic: " + subtaskValue.myEpic);
             }
         }
-
-
     }
 
     //Удаление всех задач
-
+    public void deleteAll (){
+        //удаление ссылок на объекты, если нет ссылок - сборщик мусора удалит объекты
+        taskHashMap.clear();
+        epicHashMap.clear();
+        subtaskHashMap.clear();
+    }
     //Удаление задачи по id
-
-
+    public void deleteById (Integer id) {
+        //использую итератор т.к. удаление элемента во время for вызывает ConcurrentModificationException
+        Iterator<Map.Entry<Integer, Task>> taskIterator = taskHashMap.entrySet().iterator();
+        while (taskIterator.hasNext()) {
+            Map.Entry<Integer, Task> entry = taskIterator.next();
+            if (entry.getKey().equals(id)) {
+                taskIterator.remove();
+            }
+        }
+        Iterator<Map.Entry<Integer, Epic>> epicIterator = epicHashMap.entrySet().iterator();
+        while (epicIterator.hasNext()) {
+            Map.Entry<Integer, Epic> entry = epicIterator.next();
+            if (entry.getKey().equals(id)) {
+                epicIterator.remove();
+            }
+        }
+        Iterator<Map.Entry<Integer, Subtask>> subtaskIterator = subtaskHashMap.entrySet().iterator();
+        while (subtaskIterator.hasNext()) {
+            Map.Entry<Integer, Subtask> entry = subtaskIterator.next();
+            if (entry.getKey().equals(id)) {
+                subtaskIterator.remove();
+            }
+        }
+     }
     //Обновление задач. Новая версия объекта и id передаются в виде параметра
     public void updateTask (Task task){
 
