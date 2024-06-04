@@ -54,6 +54,23 @@ public class TaskManager {
         }
     }
     //Получение списка всех задач
+    public  void getAllIssues (){
+        for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
+            Integer key = entry.getKey();
+            Task task = entry.getValue();
+            System.out.println(task.getType() + " ID " + key + ": " + task.getName());
+        }
+        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
+            Integer key = entry.getKey();
+            Epic epic = entry.getValue();
+            System.out.println(epic.getType() + " ID " + key + ": " + epic.getName() + " | Subtasks in this Epic: " + epic.listSubtasksInEpic);
+        }
+        for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
+            Integer key = entry.getKey();
+            Subtask subtask = entry.getValue();
+            System.out.println(subtask.getType() + " ID " + key + ": " + subtask.getName() + "  | This Subtask in Epic: " + subtask.myEpic);
+        }
+    }
     public void getTasks() {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
             Integer key = entry.getKey();
@@ -119,7 +136,6 @@ public class TaskManager {
             }
         }
     }
-
     //Удаление всех задач
     public void deleteAll (){
         //удаление ссылок на объекты, если нет ссылок - сборщик мусора удалит объекты
@@ -153,13 +169,13 @@ public class TaskManager {
         }
      }
     //Обновление задач. Новая версия объекта и id передаются в виде параметра
-    public void updateTask (Task task){
+    public void updateTask (Integer Id, Task task){
 
     }
-    public void updateEpic (Epic epic){
+    public void updateEpic (Integer Id, Epic epic){
 
     }
-    public void updateSubtask (Subtask subtask){
+    public void updateSubtask (Integer Id, Subtask subtask){
 
     }
 
