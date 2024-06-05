@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Scanner;
 
 public class TaskManager {
     private static Integer currentId = 0;
@@ -66,19 +67,21 @@ public class TaskManager {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
             Integer key = entry.getKey();
             Task task = entry.getValue();
-            System.out.println(task.getType() + " ID " + key + ": " + task.getName());
+            System.out.println(task.getType() + " " + task.getStatus() + " ID " + key + ": " + task.getName() + ". Description: " + task.getDescription());
         }
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
             Integer key = entry.getKey();
             Epic epic = entry.getValue();
-            System.out.println(epic.getType() + " ID " + key + ": " + epic.getName() + " | Subtasks in this Epic: " + epic.listSubtasksInEpic);
+            System.out.println(epic.getType() + " " + epic.getStatus() +  " ID " + key + ": " + epic.getName() + " -> Subtasks in this Epic: " + epic.listSubtasksInEpic + ". Description: " + epic.getDescription());
         }
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
             Integer key = entry.getKey();
             Subtask subtask = entry.getValue();
-            System.out.println(subtask.getType() + " ID " + key + ": " + subtask.getName() + "  | This Subtask in Epic: " + subtask.myEpic);
+            System.out.println(subtask.getType()+ " " + subtask.getStatus() + " ID " + key + ": " + subtask.getName() + "  -> This Subtask in Epic: " + subtask.myEpic + ". Description: " + subtask.getDescription());
         }
     }
+
+    //Получение отдельно каждого типа задач
     public void getTasks() {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
             Integer key = entry.getKey();
@@ -176,19 +179,39 @@ public class TaskManager {
             }
         }
      }
+
+
     //Обновление задач. Новая версия объекта и id передаются в виде параметра
+    //Для эпика вместе с обновлением реализовать логику статусов
 
-    //Добавить задачу в хранилище -  надо разделить методы создание, добавление в хранилище и апдейт!!!!
-    public void updateTask (Task task){
-        //Добавить задачу в хранилище
-        taskHashMap.put(task.getId(), task);
-    }
-    public void updateEpic (Epic epic){
-        epicHashMap.put(epic.getId(),epic);
-    }
-    public void updateSubtask (Subtask subtask){
-        subtaskHashMap.put(subtask.getId(),subtask);
-    }
 
-    //Управление статусами
-}
+    //подумать над методом выбора, и если не 1 и не 2
+    public Task createTaskToUpdate(Integer id){
+        Task task = taskHashMap.get(id);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Изменить имя? 1 - да, 2 - нет");
+        Integer myChoice1 = scanner.nextInt();
+        if (myChoice1 == 1) {
+            task.setName();
+        }else{
+            System.out.println("Имя не изменено");
+        }
+        System.out.println("Изменить описание? 1 - да, 2 - нет");
+        Integer myChoice2 = scanner.nextInt();
+        if (myChoice2 == 1) {
+            task.setDescription();
+        }else{
+            System.out.println("Описание не изменено");
+        }
+        System.out.println("Изменить статус? 1 - да, 2 - нет");
+        Integer myChoice3 = scanner.nextInt();
+        if (myChoice3 == 1) {
+            System.out.println("Введите новый статус");
+            String status = scanner.nextLine();
+            task.setStatus(status);  ///что-то здесь не то, проскакивает ввод статуса
+        }else{
+            System.out.println("Статус не изменен");
+        }
+         return  task;
+    }
+ }

@@ -29,7 +29,7 @@ public class Task {
     }
 
     public void setName() {
-        System.out.println("Введите название задачи");
+        System.out.println("Введите название");
         Scanner scanner = new Scanner(System.in);
         name = scanner.nextLine();
     }
@@ -39,7 +39,7 @@ public class Task {
     }
 
     public void setDescription() {
-        System.out.println("Введите описание задачи");
+        System.out.println("Введите описание");
         Scanner scanner = new Scanner(System.in);
         description = scanner.nextLine();
     }

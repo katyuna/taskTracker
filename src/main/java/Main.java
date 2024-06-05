@@ -54,9 +54,7 @@ public class Main {
             } else if (userInput == 10) {
                 System.out.println("Введите ID для обновления.");
                 int id = scanner.nextInt();
-
-
-
+                manager.addTaskToStorage(manager.createTaskToUpdate(id));
             } else {
                 System.out.println("Выберите вариант из меню.");
             }
