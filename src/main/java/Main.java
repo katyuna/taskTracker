@@ -20,14 +20,13 @@ public class Main {
                 //Показать список задач Subtasks.
                 manager.getSubtasks();
             } else if (userInput == 1) {
-                //Создать задачу Task.
-                manager.createTask();
+                manager.addTaskToStorage(manager.createTask());
             } else if (userInput == 2) {
                 //Создать задачу Epic.
-                manager.createEpic();
+                manager.addEpicToStorage(manager.createEpic());
             }else if (userInput == 3) {
                 //Создать Подзадачу.
-                manager.createSubtask();
+                manager.addSubtaskToStorage(manager.createSubtask());
             }else if (userInput == 31) {
                 //Добавить подзадачу в Эпик.
                 System.out.println("Введите ID эпика, в который нужно добавить подзадачу.");
@@ -50,6 +49,14 @@ public class Main {
             } else if (userInput == 9) {
                 System.out.println("Все удалено!.");
                 manager.deleteAll();
+            } else if (userInput == 11) {
+                manager.getAllIssues();
+            } else if (userInput == 10) {
+                System.out.println("Введите ID для обновления.");
+                int id = scanner.nextInt();
+
+
+
             } else {
                 System.out.println("Выберите вариант из меню.");
             }
@@ -58,6 +65,7 @@ public class Main {
     }
 
     private static void printMenu() {
+        System.out.println("11 - Посмотреть полный список.");
         System.out.println("1 - Создать Task.");
         System.out.println("2 - Создать Epic.");
         System.out.println("3 - Создать Subtask.");
@@ -69,6 +77,7 @@ public class Main {
         System.out.println("7 - Вывести по id.");
         System.out.println("8 - Удалить по id.");
         System.out.println("9 - Удалить все.");
+        System.out.println("10 - Обновить Task.");
         System.out.println("0 - Выход.");
     }
 }

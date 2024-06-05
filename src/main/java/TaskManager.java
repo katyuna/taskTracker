@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,34 +10,43 @@ public class TaskManager {
     HashMap<Integer, Epic> epicHashMap = new HashMap<>();
     HashMap<Integer, Subtask> subtaskHashMap = new HashMap<>();
 
+    public void addTaskToStorage (Task task){
+        taskHashMap.put(task.getId(), task);
+    }
+    public  void addEpicToStorage(Epic epic){
+        epicHashMap.put(epic.getId(), epic);
+    }
+    public void addSubtaskToStorage(Subtask subtask){
+        subtaskHashMap.put(subtask.getId(), subtask);
+    }
+
     //Создание задач
-    public void createTask (){
+    public Task createTask (){
        Task task = new Task();
        task.setId(currentId++);
        task.setName();
        task.setDescription();
        task.setStatus("NEW");
        task.setType("Task");
-        //Добавить задачу в хранилище
-        taskHashMap.put(task.getId(), task);
+       return task;
     }
-    public void createEpic (){
+    public Epic createEpic (){
         Epic epic = new Epic();
         epic.setId(currentId++);
         epic.setName();
         epic.setDescription();
         epic.setStatus("NEW");
         epic.setType("Epic");
-        epicHashMap.put(epic.getId(), epic);
+        return epic;
    }
-    public void createSubtask (){
+    public Subtask createSubtask (){
         Subtask subtask = new Subtask();
         subtask.setId(currentId++);
         subtask.setName();
         subtask.setDescription();
         subtask.setStatus("NEW");
         subtask.setType("Subtask");
-        subtaskHashMap.put(subtask.getId(), subtask);
+        return subtask;
     }
 
     //Добавить подзадачу в эпик
@@ -169,14 +177,17 @@ public class TaskManager {
         }
      }
     //Обновление задач. Новая версия объекта и id передаются в виде параметра
-    public void updateTask (Integer Id, Task task){
 
+    //Добавить задачу в хранилище -  надо разделить методы создание, добавление в хранилище и апдейт!!!!
+    public void updateTask (Task task){
+        //Добавить задачу в хранилище
+        taskHashMap.put(task.getId(), task);
     }
-    public void updateEpic (Integer Id, Epic epic){
-
+    public void updateEpic (Epic epic){
+        epicHashMap.put(epic.getId(),epic);
     }
-    public void updateSubtask (Integer Id, Subtask subtask){
-
+    public void updateSubtask (Subtask subtask){
+        subtaskHashMap.put(subtask.getId(),subtask);
     }
 
     //Управление статусами
