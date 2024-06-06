@@ -110,7 +110,7 @@ public class TaskManager {
             Integer epicKey = entry.getKey();
             Epic epicValue = entry.getValue();
             if (epicId == epicKey){
-                System.out.println("Список подзадач для эпика (ID" + epicId + ")");
+                System.out.println("Список подзадач для эпика c ID " + epicId + ": ");
                 for (int i =0; i<epicValue.listSubtasksInEpic.size(); i++){
                     System.out.println(epicValue.listSubtasksInEpic.get(i).getType() + " " + epicValue.listSubtasksInEpic.get(i).getStatus() +" " + epicValue.listSubtasksInEpic.get(i).getId() + ": " + epicValue.listSubtasksInEpic.get(i).getName() + ". Description: " + epicValue.listSubtasksInEpic.get(i).getDescription());
                 }
@@ -125,6 +125,7 @@ public class TaskManager {
             if (id == taskKey) {
                 System.out.println("Type: " + taskValue.getType() + ". Status: " + taskValue.getStatus() + ". ID " + taskKey + ". Name: " + taskValue.getName());
                 System.out.println("Description: " + taskValue.getDescription());
+                return;
             }
         }
             for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
@@ -134,6 +135,7 @@ public class TaskManager {
                     System.out.println("Type: " + epicValue.getType() + ". Status: " + epicValue.getStatus() + ". ID " + epicKey + ". Name: " + epicValue.getName());
                     System.out.println("Description: " + epicValue.getDescription());
                     getSubtasksByEpicId(epicKey);
+                    return;
                 }
             }
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
@@ -143,6 +145,7 @@ public class TaskManager {
                 System.out.println("Type: " + subtaskValue.getType() + ". Status: " + subtaskValue.getStatus() + ". ID " + subtaskKey + ". Name: " + subtaskValue.getName());
                 System.out.println("Description: " + subtaskValue.getDescription());
                 System.out.println("Located in Epic: " + subtaskValue.myEpic);
+                return;
             }
         }
     }
