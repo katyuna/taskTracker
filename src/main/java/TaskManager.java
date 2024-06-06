@@ -112,7 +112,7 @@ public class TaskManager {
             if (epicId == epicKey){
                 System.out.println("Список подзадач для эпика (ID" + epicId + ")");
                 for (int i =0; i<epicValue.listSubtasksInEpic.size(); i++){
-                    System.out.println(epicValue.listSubtasksInEpic.get(i).getId() + ": " + epicValue.listSubtasksInEpic.get(i).getName());
+                    System.out.println(epicValue.listSubtasksInEpic.get(i).getType() + " " + epicValue.listSubtasksInEpic.get(i).getStatus() +" " + epicValue.listSubtasksInEpic.get(i).getId() + ": " + epicValue.listSubtasksInEpic.get(i).getName() + ". Description: " + epicValue.listSubtasksInEpic.get(i).getDescription());
                 }
             }
 
