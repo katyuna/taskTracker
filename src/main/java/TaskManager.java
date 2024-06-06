@@ -185,10 +185,8 @@ public class TaskManager {
 
     //Обновление задач. Новая версия объекта и id передаются в виде параметра
     //Для эпика вместе с обновлением реализовать логику статусов
-
-
     //подумать над методом выбора, и если не 1 и не 2
-    public Task createTaskToUpdate(Integer id){
+    public Task createUpdatedTask(Integer id){
         Task task = taskHashMap.get(id);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Изменить имя? 1 - да, 2 - нет");
@@ -196,7 +194,7 @@ public class TaskManager {
         if (myChoice1 == 1) {
             task.setName();
         }else{
-            System.out.println("Имя не изменено");
+           System.out.println("Имя не изменено");
         }
         System.out.println("Изменить описание? 1 - да, 2 - нет");
         Integer myChoice2 = scanner.nextInt();
@@ -225,4 +223,11 @@ public class TaskManager {
         }
          return  task;
     }
+
+
+
+
+
+
+
  }

@@ -55,7 +55,7 @@ public class Main {
             }  else if (userInput == 13) {
                 System.out.println("Введите ID для обновления.");
                 int id = scanner.nextInt();
-                manager.addTaskToStorage(manager.createTaskToUpdate(id));
+                manager.addTaskToStorage(manager.createUpdatedTask(id));
             } else {
                 System.out.println("Выберите вариант из меню.");
             }
