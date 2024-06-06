@@ -115,7 +115,6 @@ public class TaskManager {
                     System.out.println(epicValue.listSubtasksInEpic.get(i).getType() + " " + epicValue.listSubtasksInEpic.get(i).getStatus() +" " + epicValue.listSubtasksInEpic.get(i).getId() + ": " + epicValue.listSubtasksInEpic.get(i).getName() + ". Description: " + epicValue.listSubtasksInEpic.get(i).getDescription());
                 }
             }
-
         }
     }
     //Получение задачи по id
@@ -206,9 +205,18 @@ public class TaskManager {
         System.out.println("Изменить статус? 1 - да, 2 - нет");
         Integer myChoice3 = scanner.nextInt();
         if (myChoice3 == 1) {
-            System.out.println("Введите новый статус");
-            String status = scanner.nextLine();
-            task.setStatus(status);  ///что-то здесь не то, проскакивает ввод статуса
+            System.out.println("Текущий статус: " + task.getStatus() +". Введите новый статус. 1 - NEW. 2 - IN PROGRESS. 3 - DONE.");
+           Integer status = scanner.nextInt();
+           if(status == 1) {
+               task.setStatus("NEW");
+           } else if (status == 2) {
+               task.setStatus("IN PROGRESS");
+           } else if (status == 3) {
+               task.setStatus("DONE");
+           }else {
+               System.out.println("Статус не изменен");
+               task.setStatus(task.getStatus());
+           }
         }else{
             System.out.println("Статус не изменен");
         }
