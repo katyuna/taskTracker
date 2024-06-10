@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class TaskManager {
     private static Integer currentId = 0;
@@ -22,29 +19,26 @@ public class TaskManager {
     }
 
     //Создание задач
-    public Task createTask (){
+    public Task createTask (String name, String description){
        Task task = new Task(currentId++);
-       //task.setId(currentId++);
-       task.setName();
-       task.setDescription();
+       task.setName(name);
+       task.setDescription(description);
        task.setStatus("NEW");
        task.setType("Task");
        return task;
     }
-    public Epic createEpic (){
+    public Epic createEpic (String name, String description){
         Epic epic = new Epic(currentId++);
-        //epic.setId(currentId++);
-        epic.setName();
-        epic.setDescription();
+        epic.setName(name);
+        epic.setDescription(description);
         epic.setStatus("NEW");
         epic.setType("Epic");
         return epic;
    }
-    public Subtask createSubtask (){
+    public Subtask createSubtask (String name, String description){
         Subtask subtask = new Subtask(currentId++);
-        //subtask.setId(currentId++);
-        subtask.setName();
-        subtask.setDescription();
+        subtask.setName(name);
+        subtask.setDescription(description);
         subtask.setStatus("NEW");
         subtask.setType("Subtask");
         return subtask;
@@ -55,7 +49,7 @@ public class TaskManager {
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
             Integer epicKey = entry.getKey();
             Epic epicValue = entry.getValue();
-            if (epicId == epicKey){
+            if (epicId.equals(epicKey)){
                 Subtask subtaskValue = subtaskHashMap.get(subtaskId);
                 epicValue.listSubtasksInEpic.add(subtaskValue);
                 subtaskValue.setE(epicValue);
@@ -109,7 +103,7 @@ public class TaskManager {
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
             Integer epicKey = entry.getKey();
             Epic epicValue = entry.getValue();
-            if (epicId == epicKey){
+            if (epicId.equals(epicKey)){
                 System.out.println("Список подзадач для эпика c ID " + epicId + ": ");
                 for (int i =0; i<epicValue.listSubtasksInEpic.size(); i++){
                     System.out.println(epicValue.listSubtasksInEpic.get(i).getType() + " " + epicValue.listSubtasksInEpic.get(i).getStatus() +" " + epicValue.listSubtasksInEpic.get(i).getId() + ": " + epicValue.listSubtasksInEpic.get(i).getName() + ". Description: " + epicValue.listSubtasksInEpic.get(i).getDescription());
@@ -122,7 +116,7 @@ public class TaskManager {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
             Integer taskKey = entry.getKey();
             Task taskValue = entry.getValue();
-            if (id == taskKey) {
+            if (id.equals(taskKey)) {
                 System.out.println("Type: " + taskValue.getType() + ". Status: " + taskValue.getStatus() + ". ID " + taskKey + ". Name: " + taskValue.getName());
                 System.out.println("Description: " + taskValue.getDescription());
                 return;
@@ -131,7 +125,7 @@ public class TaskManager {
             for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
                 Integer epicKey = entry.getKey();
                 Epic epicValue = entry.getValue();
-                if (id == epicKey) {
+                if (id.equals(epicKey)) {
                     System.out.println("Type: " + epicValue.getType() + ". Status: " + epicValue.getStatus() + ". ID " + epicKey + ". Name: " + epicValue.getName());
                     System.out.println("Description: " + epicValue.getDescription());
                     getSubtasksByEpicId(epicKey);
@@ -141,7 +135,7 @@ public class TaskManager {
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
             Integer subtaskKey = entry.getKey();
             Subtask subtaskValue = entry.getValue();
-            if (id == subtaskKey) {
+            if (id.equals(subtaskKey)) {
                 System.out.println("Type: " + subtaskValue.getType() + ". Status: " + subtaskValue.getStatus() + ". ID " + subtaskKey + ". Name: " + subtaskValue.getName());
                 System.out.println("Description: " + subtaskValue.getDescription());
                 System.out.println("Located in Epic: " + subtaskValue.e);
@@ -158,7 +152,7 @@ public class TaskManager {
     }
     //Удаление задачи по id
     public void deleteById (Integer id) {
-        //использую итератор т.к. удаление элемента во время for вызывает ConcurrentModificationException
+        //Использую итератор т.к. удаление элемента во время for вызывает ConcurrentModificationException
         Iterator<Map.Entry<Integer, Task>> taskIterator = taskHashMap.entrySet().iterator();
         while (taskIterator.hasNext()) {
             Map.Entry<Integer, Task> entry = taskIterator.next();
@@ -190,24 +184,28 @@ public class TaskManager {
         Task task = taskHashMap.get(id);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Изменить имя? 1 - да, 2 - нет");
-        Integer myChoice1 = scanner.nextInt();
+        int myChoice1 = scanner.nextInt();
         if (myChoice1 == 1) {
-            task.setName();
+            System.out.println("Введите название");
+            String name = scanner.nextLine();
+            task.setName(name);
         }else{
            System.out.println("Имя не изменено");
         }
         System.out.println("Изменить описание? 1 - да, 2 - нет");
-        Integer myChoice2 = scanner.nextInt();
+        int myChoice2 = scanner.nextInt();
         if (myChoice2 == 1) {
-            task.setDescription();
+            System.out.println("Введите описание");
+            String description = scanner.nextLine();
+            task.setDescription(description);
         }else{
             System.out.println("Описание не изменено");
         }
         System.out.println("Изменить статус? 1 - да, 2 - нет");
-        Integer myChoice3 = scanner.nextInt();
+        int myChoice3 = scanner.nextInt();
         if (myChoice3 == 1) {
             System.out.println("Текущий статус: " + task.getStatus() +". Введите новый статус. 1 - NEW. 2 - IN PROGRESS. 3 - DONE.");
-           Integer status = scanner.nextInt();
+           int status = scanner.nextInt();
            if(status == 1) {
                task.setStatus("NEW");
            } else if (status == 2) {

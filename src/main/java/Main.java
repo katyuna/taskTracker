@@ -14,13 +14,25 @@ public class Main {
                 manager.getAllIssues();
             }
             else if (userInput == 2) {
-                manager.addTaskToStorage(manager.createTask());
+                System.out.println("Введите название");
+                String name = scanner.nextLine();
+                System.out.println("Введите описание");
+                String description = scanner.nextLine();
+                manager.addTaskToStorage(manager.createTask(name, description));
             } else if (userInput == 3) {
                 //Создать задачу Epic.
-                manager.addEpicToStorage(manager.createEpic());
+                System.out.println("Введите название");
+                String name = scanner.nextLine();
+                System.out.println("Введите описание");
+                String description = scanner.nextLine();
+                manager.addEpicToStorage(manager.createEpic(name, description));
             }else if (userInput == 4) {
                 //Создать Подзадачу.
-                manager.addSubtaskToStorage(manager.createSubtask());
+                System.out.println("Введите название");
+                String name = scanner.nextLine();
+                System.out.println("Введите описание");
+                String description = scanner.nextLine();
+                manager.addSubtaskToStorage(manager.createSubtask(name, description));
             }else if (userInput == 5) {
                 //Добавить подзадачу в Эпик.
                 System.out.println("Введите ID эпика, в который нужно добавить подзадачу.");
