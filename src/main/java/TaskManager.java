@@ -23,8 +23,8 @@ public class TaskManager {
 
     //Создание задач
     public Task createTask (){
-       Task task = new Task();
-       task.setId(currentId++);
+       Task task = new Task(currentId++);
+       //task.setId(currentId++);
        task.setName();
        task.setDescription();
        task.setStatus("NEW");
@@ -32,8 +32,8 @@ public class TaskManager {
        return task;
     }
     public Epic createEpic (){
-        Epic epic = new Epic();
-        epic.setId(currentId++);
+        Epic epic = new Epic(currentId++);
+        //epic.setId(currentId++);
         epic.setName();
         epic.setDescription();
         epic.setStatus("NEW");
@@ -41,8 +41,8 @@ public class TaskManager {
         return epic;
    }
     public Subtask createSubtask (){
-        Subtask subtask = new Subtask();
-        subtask.setId(currentId++);
+        Subtask subtask = new Subtask(currentId++);
+        //subtask.setId(currentId++);
         subtask.setName();
         subtask.setDescription();
         subtask.setStatus("NEW");
@@ -58,7 +58,7 @@ public class TaskManager {
             if (epicId == epicKey){
                 Subtask subtaskValue = subtaskHashMap.get(subtaskId);
                 epicValue.listSubtasksInEpic.add(subtaskValue);
-                subtaskValue.setMyEpic(epicValue);
+                subtaskValue.setE(epicValue);
             }
         }
     }
@@ -77,7 +77,7 @@ public class TaskManager {
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
             Integer key = entry.getKey();
             Subtask subtask = entry.getValue();
-            System.out.println(subtask.getType()+ " " + subtask.getStatus() + " ID " + key + ": " + subtask.getName() + "  -> This Subtask in Epic: " + subtask.myEpic + ". Description: " + subtask.getDescription());
+            System.out.println(subtask.getType()+ " " + subtask.getStatus() + " ID " + key + ": " + subtask.getName() + "  -> This Subtask in Epic: " + subtask.e + ". Description: " + subtask.getDescription());
         }
     }
 
@@ -100,7 +100,7 @@ public class TaskManager {
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
             Integer key = entry.getKey();
             Subtask subtask = entry.getValue();
-            System.out.println("ID " + key + ": " + subtask.getName() + "  | This Subtask in Epic: " + subtask.myEpic);
+            System.out.println("ID " + key + ": " + subtask.getName() + "  | This Subtask in Epic: " + subtask.e);
         }
     }
 
@@ -144,7 +144,7 @@ public class TaskManager {
             if (id == subtaskKey) {
                 System.out.println("Type: " + subtaskValue.getType() + ". Status: " + subtaskValue.getStatus() + ". ID " + subtaskKey + ". Name: " + subtaskValue.getName());
                 System.out.println("Description: " + subtaskValue.getDescription());
-                System.out.println("Located in Epic: " + subtaskValue.myEpic);
+                System.out.println("Located in Epic: " + subtaskValue.e);
                 return;
             }
         }

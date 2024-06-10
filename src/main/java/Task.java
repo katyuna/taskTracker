@@ -1,28 +1,31 @@
 import java.util.Scanner;
 
 public class Task {
-    Integer id;
-    String name;
-    String description;
-    String status;
-    String type;
+    private  final Integer id;
+    private String name;
+    private String description;
+    private String status;
+    private String type;
 
-
-    public Task() {
+    public Task(Integer id) {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.status = status;
-        this.type = type;
     }
+
+//    public Task() {
+//        this.id = id;
+//        this.name = name;
+//        this.description = description;
+//        this.status = status;
+//        this.type = type;
+//    }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;

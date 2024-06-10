@@ -1,16 +1,16 @@
 public class Subtask extends Task {
 
-    Epic myEpic;
+    Epic e;
 
-    public Subtask() {
-        super();
+    public Subtask(Integer id) {
+        super(id);
     }
 
-    public Epic getMyEpic() {
-        return myEpic;
+    public Epic getE() {
+        return e;
     }
 
-    public void setMyEpic(Epic myEpic) {
-        this.myEpic = myEpic;
+    public void setE(Epic e) {
+        this.e = e;
     }
 }
