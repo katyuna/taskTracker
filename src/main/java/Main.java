@@ -10,10 +10,11 @@ public class Main {
             if (userInput == 0) {
                 System.out.println("Вы вышли из таск-трекера.");
                 break;
-            }else if (userInput == 1) {
+            } else if (userInput == 1) {
+
+
                 manager.getAllIssues();
-            }
-            else if (userInput == 2) {
+            } else if (userInput == 2) {
                 System.out.println("Введите название");
                 String name = scanner.nextLine();
                 System.out.println("Введите описание");
@@ -26,21 +27,21 @@ public class Main {
                 System.out.println("Введите описание");
                 String description = scanner.nextLine();
                 manager.addEpicToStorage(manager.createEpic(name, description));
-            }else if (userInput == 4) {
+            } else if (userInput == 4) {
                 //Создать Подзадачу.
                 System.out.println("Введите название");
                 String name = scanner.nextLine();
                 System.out.println("Введите описание");
                 String description = scanner.nextLine();
                 manager.addSubtaskToStorage(manager.createSubtask(name, description));
-            }else if (userInput == 5) {
+            } else if (userInput == 5) {
                 //Добавить подзадачу в Эпик.
                 System.out.println("Введите ID эпика, в который нужно добавить подзадачу.");
                 int epicId = scanner.nextInt();
                 System.out.println("Введите ID подзадачи, которую нужно добавить в эпик.");
                 int subtaskId = scanner.nextInt();
                 manager.addSubtaskToEpicByIds(epicId, subtaskId);
-            }else if (userInput == 6) {
+            } else if (userInput == 6) {
                 //Показать список задач Task.
                 manager.getTasks();
             } else if (userInput == 7) {
@@ -49,10 +50,10 @@ public class Main {
             } else if (userInput == 8) {
                 //Показать список задач Subtasks.
                 manager.getSubtasks();
-            }  else if (userInput == 9) {
+            } else if (userInput == 9) {
                 System.out.println("Введите ID эпика, для которого нужно получить список подзадач.");
                 int epicId = scanner.nextInt();
-                manager.getSubtasksByEpicId(epicId);
+                manager.printSubtasksInEpic(epicId);
             } else if (userInput == 10) {
                 System.out.println("Введите ID.");
                 int id = scanner.nextInt();
@@ -64,7 +65,7 @@ public class Main {
             } else if (userInput == 12) {
                 System.out.println("Все удалено!.");
                 manager.deleteAll();
-            }  else if (userInput == 13) {
+            } else if (userInput == 13) {
                 System.out.println("Введите ID для обновления.");
                 int id = scanner.nextInt();
                 manager.addTaskToStorage(manager.createUpdatedTask(id));
