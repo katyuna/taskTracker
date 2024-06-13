@@ -50,7 +50,7 @@ public class TaskManager {
             Epic epicValue = entry.getValue();
             if (epicId.equals(epicKey)) {
                 Subtask subtaskValue = subtaskHashMap.get(subtaskId);
-                epicValue.listSubtasksInEpic.add(subtaskValue);
+                epicValue.getListSubtasksInEpic().add(subtaskValue);
                 subtaskValue.setEpic(epicValue);
             }
         }
@@ -60,7 +60,7 @@ public class TaskManager {
         System.out.println(task.getType() + " " + task.getStatus() + " ID " + task.getId() + ": " + task.getName() + ". Description: " + task.getDescription());
     }
     public  void printEpic (Epic epic) {
-        System.out.println(epic.getType() + " " + epic.getStatus() + " ID " + epic.getId() + ": " + epic.getName() + " -> Subtasks in this Epic: " + epic.listSubtasksInEpic + ". Description: " + epic.getDescription());
+        System.out.println(epic.getType() + " " + epic.getStatus() + " ID " + epic.getId() + ": " + epic.getName() + " -> Subtasks in this Epic: " + epic.getListSubtasksInEpic() + ". Description: " + epic.getDescription());
     }
     public void printSubtask (Subtask subtask){
         System.out.println(subtask.getType() + " " + subtask.getStatus() + " ID " + subtask.getId() + ": " + subtask.getName() + "  -> This Subtask in Epic: " + subtask.epic + ". Description: " + subtask.getDescription());

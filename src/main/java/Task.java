@@ -47,10 +47,4 @@ public class Task {
     public void setType(String type) {
         this.type = type;
     }
-
-    // Переопределяем метод toString
-//    @Override
-//    public String toString() {
-//        return type + "{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + '}';
-//    }
 }
