@@ -44,7 +44,7 @@ public class TaskManager {
         return subtask;
     }
 
-
+    //Проверка epicId
     public boolean isEpicIdEqualToKey(Integer epicId) {
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
             Integer epicKey = entry.getKey();
@@ -63,6 +63,20 @@ public class TaskManager {
             subtask.setEpic(epicValue);
         }
     }
+
+    public void deleteSubtaskFromEpic(Integer epicId, Integer subtaskId) {
+        if (isEpicIdEqualToKey(epicId)) {
+            Epic epicValue = epicHashMap.get(epicId);
+            ArrayList<Subtask> listSubtasksInEpic = epicValue.getListSubtasksInEpic();
+            for (int i = 0; i < listSubtasksInEpic.size(); i++) {
+                Subtask subtask = listSubtasksInEpic.get(i);
+                if (subtask.getId() == subtaskId) {
+                    listSubtasksInEpic.remove(i);
+                    break; // Выходим из цикла, так как мы нашли и удалили нужную подзадачу
+                }
+            }
+        }
+    }
      //Печать тикетов
     public void printTask(Task task){
         System.out.println(task.getType() + " " + task.getStatus() + " ID " + task.getId() + ": " + task.getName() + ". Description: " + task.getDescription());
@@ -73,38 +87,32 @@ public class TaskManager {
     public void printSubtask (Subtask subtask){
         System.out.println(subtask.getType() + " " + subtask.getStatus() + " ID " + subtask.getId() + ": " + subtask.getName() + ". Description: " + subtask.getDescription() + "  -> This Subtask in Epic: " + subtask.epic);
     }
+
     //Получение списков тикетов
     public void getTasks() {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
-//            Integer key = entry.getKey();
             Task task = entry.getValue();
             printTask(task);
         }
     }
     public void getEpics() {
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
-//            Integer key = entry.getKey();
             Epic epic = entry.getValue();
             printEpic(epic);
         }
     }
     public void getSubtasks() {
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
-//            Integer key = entry.getKey();
             Subtask subtask = entry.getValue();
             printSubtask(subtask);
         }
     }
+
     public ArrayList<Subtask> getSubtasksInEpic(Integer epicId) {
-        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
-            Integer epicKey = entry.getKey();
-            Epic epicValue = entry.getValue();
-            if (epicId.equals(epicKey)) {
-                return epicValue.getListSubtasksInEpic();
-            }
-        }
-        return null;
+        Epic epicValue = epicHashMap.get(epicId);
+        return epicValue.getListSubtasksInEpic();
     }
+
     //Печать всех подзадач эпика
     public void printSubtasksInEpic(Integer epicId) {
         ArrayList<Subtask> subtasksInEpic = getSubtasksInEpic(epicId);
@@ -145,7 +153,8 @@ public class TaskManager {
 
         return null;
     }
-    //Получение тикета по id
+
+    //Пeчать тикета по id
     public void printIssueById(Integer id) {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
             Integer taskKey = entry.getKey();
@@ -173,10 +182,10 @@ public class TaskManager {
     //Удаление всех задач
     public void deleteAll() {
         //удаление ссылок на объекты, если нет ссылок - сборщик мусора удалит объекты
+        subtaskHashMap.clear();
         taskHashMap.clear();
         epicHashMap.clear();
-        subtaskHashMap.clear();
-        //Обнуляем id, чтобы при новом создании снова id начинались в 0
+         //Обнуляем id, чтобы при новом создании снова id начинались в 0
         TaskManager.currentId = 0;
     }
 
@@ -187,11 +196,15 @@ public class TaskManager {
             taskHashMap.remove(id);
         } else if (epicHashMap.containsKey(id)) {
             epicHashMap.remove(id);
-            //подазадачи тоже грохнуть?
+            //Подзадачи тоже грохнуть?
 
         } else if (subtaskHashMap.containsKey(id)) {
+            Subtask subtask = subtaskHashMap.get(id);
+            Epic epic = subtask.getEpic();
+            deleteSubtaskFromEpic(epic.getId(), id);
             subtaskHashMap.remove(id);
             //удалится ли связь с эпиком автомагически?
+            //ИЗ ЭПИКА НАДО УДАЛЯТЬ
 
         } else {
             System.out.println("Элемент с ключом " + id + " не найден.");

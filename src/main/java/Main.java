@@ -50,17 +50,6 @@ public class Main {
                 }else {
                     System.out.println("Нет такого Эпика");
                 }
-
-
-
-//                System.out.println("Введите название Сабтаски");
-//                String name = scanner.nextLine();
-//                System.out.println("Введите описание Сабтаски");
-//                String description = scanner.nextLine();
-//                Subtask subtask = manager.createSubtask(name, description);
-//                manager.addSubtaskToEpic(epicId, subtask);
-//                manager.addSubtaskToStorage(subtask);
-//                manager.printSubtask(subtask);
             } else if (userInput == 5) {
                 //Показать список задач Task.
                 manager.getTasks();
