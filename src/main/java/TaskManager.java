@@ -44,34 +44,26 @@ public class TaskManager {
         return subtask;
     }
 
+
+    public boolean isEpicIdEqualToKey(Integer epicId) {
+        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
+            Integer epicKey = entry.getKey();
+            if (epicId.equals(epicKey)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Добавление подзадачи в эпик
     public void addSubtaskToEpic(Integer epicId, Subtask subtask) {
-        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
-            Integer epicKey = entry.getKey();
-            Epic epicValue = entry.getValue();
-            if (epicId.equals(epicKey)) {
-                epicValue.getListSubtasksInEpic().add(subtask);
-                subtask.setEpic(epicValue);
-               // updateEpicStatus(epicId);
-            } else {
-                System.out.println("Нет такого Эпика");
-            }
+        if (isEpicIdEqualToKey(epicId)) {
+            Epic epicValue = epicHashMap.get(epicId);
+            epicValue.getListSubtasksInEpic().add(subtask);
+            subtask.setEpic(epicValue);
         }
     }
-    //
-    public void addSubtaskToEpicByIds(Integer epicId, Integer subtaskId) {
-        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
-            Integer epicKey = entry.getKey();
-            Epic epicValue = entry.getValue();
-            if (epicId.equals(epicKey)) {
-                Subtask subtaskValue = subtaskHashMap.get(subtaskId);
-                epicValue.getListSubtasksInEpic().add(subtaskValue);
-                subtaskValue.setEpic(epicValue);
-                //updateEpicStatus(epicId);
-            }
-        }
-    }
-    //Печать тикетов
+     //Печать тикетов
     public void printTask(Task task){
         System.out.println(task.getType() + " " + task.getStatus() + " ID " + task.getId() + ": " + task.getName() + ". Description: " + task.getDescription());
     }

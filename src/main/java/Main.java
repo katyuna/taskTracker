@@ -38,47 +38,54 @@ public class Main {
                 System.out.println("Введите ID эпика, в котором нужно создать подзадачу.");
                 int epicId = scanner.nextInt();
                 scanner.nextLine();
-                System.out.println("Введите название Сабтаски");
-                String name = scanner.nextLine();
-                System.out.println("Введите описание Сабтаски");
-                String description = scanner.nextLine();
-                Subtask subtask = manager.createSubtask(name, description);
-                manager.addSubtaskToEpic(epicId, subtask);
-                manager.addSubtaskToStorage(subtask);
-                manager.printSubtask(subtask);
-//            } else if (userInput == 5) {
-//                //Добавить подзадачу в Эпик.
-//                System.out.println("Введите ID эпика, в который нужно добавить подзадачу.");
-//                int epicId = scanner.nextInt();
-//                System.out.println("Введите ID подзадачи, которую нужно добавить в эпик.");
-//                int subtaskId = scanner.nextInt();
-//                manager.addSubtaskToEpicByIds(epicId, subtaskId);
-//                //manager.updateEpicStatus(epicId);
-            } else if (userInput == 6) {
+                if (manager.isEpicIdEqualToKey(epicId)) {
+                    System.out.println("Введите название Сабтаски");
+                    String name = scanner.nextLine();
+                    System.out.println("Введите описание Сабтаски");
+                    String description = scanner.nextLine();
+                    Subtask subtask = manager.createSubtask(name, description);
+                    manager.addSubtaskToEpic(epicId, subtask);
+                    manager.addSubtaskToStorage(subtask);
+                    manager.printSubtask(subtask);
+                }else {
+                    System.out.println("Нет такого Эпика");
+                }
+
+
+
+//                System.out.println("Введите название Сабтаски");
+//                String name = scanner.nextLine();
+//                System.out.println("Введите описание Сабтаски");
+//                String description = scanner.nextLine();
+//                Subtask subtask = manager.createSubtask(name, description);
+//                manager.addSubtaskToEpic(epicId, subtask);
+//                manager.addSubtaskToStorage(subtask);
+//                manager.printSubtask(subtask);
+            } else if (userInput == 5) {
                 //Показать список задач Task.
                 manager.getTasks();
-            } else if (userInput == 7) {
+            } else if (userInput == 6) {
                 //Показать список задач Epic.
                 manager.getEpics();
-            } else if (userInput == 8) {
+            } else if (userInput == 7) {
                 //Показать список задач Subtasks.
                 manager.getSubtasks();
-            } else if (userInput == 9) {
+            } else if (userInput == 8) {
                 System.out.println("Введите ID эпика, для которого нужно получить список подзадач.");
                 int epicId = scanner.nextInt();
                 manager.printSubtasksInEpic(epicId);
-            } else if (userInput == 10) {
+            } else if (userInput == 9) {
                 System.out.println("Введите ID.");
                 int id = scanner.nextInt();
                 manager.printIssueById(id);
-            } else if (userInput == 11) {
+            } else if (userInput == 10) {
                 System.out.println("Введите ID тикета для удаления.");
                 int id = scanner.nextInt();
                 manager.deleteById(id);
-            } else if (userInput == 12) {
+            } else if (userInput == 11) {
                 System.out.println("Все удалено!.");
                 manager.deleteAll();
-            } else if (userInput == 13) {
+            } else if (userInput == 12) {
                 System.out.println("Введите ID тикета для обновления.");
                 int id = scanner.nextInt();
                 manager.addTaskToStorage(manager.updateTask(id));
@@ -94,15 +101,14 @@ public class Main {
         System.out.println("2 - Создать Task.");
         System.out.println("3 - Создать Epic.");
         System.out.println("4 - Создать Subtask.");
-//      System.out.println("5 - Перенести подзадачу в другой Эпик");
-        System.out.println("6 - Показать список Task.");
-        System.out.println("7 - Показать список Epic.");
-        System.out.println("8 - Показать список Subtask.");
-        System.out.println("9 - Показать список подзадач Эпика.");
-        System.out.println("10 - Вывести по id.");
-        System.out.println("11 - Удалить по id.");
-        System.out.println("12 - Удалить все.");
-        System.out.println("13 - Обновить Task.");
+        System.out.println("5 - Показать список Task.");
+        System.out.println("6 - Показать список Epic.");
+        System.out.println("7 - Показать список Subtask.");
+        System.out.println("8 - Показать список подзадач Эпика.");
+        System.out.println("9 - Вывести по id.");
+        System.out.println("10 - Удалить по id.");
+        System.out.println("11 - Удалить все.");
+        System.out.println("12 - Обновить Task.");
         System.out.println("0 - Выход.");
     }
 }
