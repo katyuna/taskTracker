@@ -43,7 +43,22 @@ public class TaskManager {
         subtask.setType("Subtask");
         return subtask;
     }
+
     //Добавление подзадачи в эпик
+    public void addSubtaskToEpic(Integer epicId, Subtask subtask) {
+        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
+            Integer epicKey = entry.getKey();
+            Epic epicValue = entry.getValue();
+            if (epicId.equals(epicKey)) {
+                epicValue.getListSubtasksInEpic().add(subtask);
+                subtask.setEpic(epicValue);
+               // updateEpicStatus(epicId);
+            } else {
+                System.out.println("Нет такого Эпика");
+            }
+        }
+    }
+    //
     public void addSubtaskToEpicByIds(Integer epicId, Integer subtaskId) {
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
             Integer epicKey = entry.getKey();
@@ -52,6 +67,7 @@ public class TaskManager {
                 Subtask subtaskValue = subtaskHashMap.get(subtaskId);
                 epicValue.getListSubtasksInEpic().add(subtaskValue);
                 subtaskValue.setEpic(epicValue);
+                //updateEpicStatus(epicId);
             }
         }
     }
@@ -60,10 +76,10 @@ public class TaskManager {
         System.out.println(task.getType() + " " + task.getStatus() + " ID " + task.getId() + ": " + task.getName() + ". Description: " + task.getDescription());
     }
     public  void printEpic (Epic epic) {
-        System.out.println(epic.getType() + " " + epic.getStatus() + " ID " + epic.getId() + ": " + epic.getName() + " -> Subtasks in this Epic: " + epic.getListSubtasksInEpic() + ". Description: " + epic.getDescription());
+        System.out.println(epic.getType() + " " + epic.getStatus() + " ID " + epic.getId() + ": " + epic.getName() + ". Description: " + epic.getDescription() + " -> Subtasks in this Epic: " + epic.getListSubtasksInEpic());
     }
     public void printSubtask (Subtask subtask){
-        System.out.println(subtask.getType() + " " + subtask.getStatus() + " ID " + subtask.getId() + ": " + subtask.getName() + "  -> This Subtask in Epic: " + subtask.epic + ". Description: " + subtask.getDescription());
+        System.out.println(subtask.getType() + " " + subtask.getStatus() + " ID " + subtask.getId() + ": " + subtask.getName() + ". Description: " + subtask.getDescription() + "  -> This Subtask in Epic: " + subtask.epic);
     }
     //Получение списков тикетов
     public void getTasks() {
@@ -100,14 +116,11 @@ public class TaskManager {
     //Печать всех подзадач эпика
     public void printSubtasksInEpic(Integer epicId) {
         ArrayList<Subtask> subtasksInEpic = getSubtasksInEpic(epicId);
-        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
-            System.out.println("Список подзадач для эпика c ID " + epicId + ": ");
-            for (int i = 0; i < subtasksInEpic.size(); i++) {
-                System.out.println(subtasksInEpic.get(i).getType() + " " + subtasksInEpic.get(i).getStatus() + " " + subtasksInEpic.get(i).getId() + ": " + subtasksInEpic.get(i).getName() + ". Description: " + subtasksInEpic.get(i).getDescription());
-            }
+        for (int i = 0; i < subtasksInEpic.size(); i++) {
+            System.out.println(subtasksInEpic.get(i).getType() + " " + subtasksInEpic.get(i).getStatus() + " " + subtasksInEpic.get(i).getId() + ": " + subtasksInEpic.get(i).getName() + ". Description: " + subtasksInEpic.get(i).getDescription());
         }
     }
-    public Task getTakById(Integer id) {
+    public Task getTaskById(Integer id) {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
             Integer key = entry.getKey();
             Task value = entry.getValue();
@@ -140,25 +153,13 @@ public class TaskManager {
 
         return null;
     }
-
-    public void printIssueById(Integer id) {
-        try {
-            printTask(getTakById(id));
-            printEpic(getEpicById(id));
-            printSubtask(getSubtaskById(id));
-        } catch (Exception e) {
-            System.err.println("Exception occurred: " + e.getMessage());
-        }
-    }
-
     //Получение тикета по id
-    public void getById(Integer id) {
+    public void printIssueById(Integer id) {
         for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
             Integer taskKey = entry.getKey();
             Task taskValue = entry.getValue();
             if (id.equals(taskKey)) {
                 printTask(taskValue);
-                return;
             }
         }
         for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
@@ -166,7 +167,6 @@ public class TaskManager {
             Epic epicValue = entry.getValue();
             if (id.equals(epicKey)) {
                 printEpic(epicValue);
-                return;
             }
         }
         for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
@@ -174,7 +174,6 @@ public class TaskManager {
             Subtask subtaskValue = entry.getValue();
             if (id.equals(subtaskKey)) {
                 printSubtask(subtaskValue);
-                return;
             }
         }
     }
@@ -191,29 +190,48 @@ public class TaskManager {
 
     //Удаление задачи по id
     public void deleteById(Integer id) {
-        //Использую итератор т.к. удаление элемента во время for вызывает ConcurrentModificationException
-        Iterator<Map.Entry<Integer, Task>> taskIterator = taskHashMap.entrySet().iterator();
-        while (taskIterator.hasNext()) {
-            Map.Entry<Integer, Task> entry = taskIterator.next();
-            if (entry.getKey().equals(id)) {
-                taskIterator.remove();
-            }
-        }
-        Iterator<Map.Entry<Integer, Epic>> epicIterator = epicHashMap.entrySet().iterator();
-        while (epicIterator.hasNext()) {
-            Map.Entry<Integer, Epic> entry = epicIterator.next();
-            if (entry.getKey().equals(id)) {
-                epicIterator.remove();
-            }
-        }
-        Iterator<Map.Entry<Integer, Subtask>> subtaskIterator = subtaskHashMap.entrySet().iterator();
-        while (subtaskIterator.hasNext()) {
-            Map.Entry<Integer, Subtask> entry = subtaskIterator.next();
-            if (entry.getKey().equals(id)) {
-                subtaskIterator.remove();
-            }
+        if (taskHashMap.containsKey(id)) {
+            // Удаляем элемент с заданным ключом
+            taskHashMap.remove(id);
+        } else if (epicHashMap.containsKey(id)) {
+            epicHashMap.remove(id);
+            //подазадачи тоже грохнуть?
+
+        } else if (subtaskHashMap.containsKey(id)) {
+            subtaskHashMap.remove(id);
+            //удалится ли связь с эпиком автомагически?
+
+        } else {
+            System.out.println("Элемент с ключом " + id + " не найден.");
         }
     }
+
+
+
+//
+//        //Использую итератор т.к. удаление элемента во время for вызывает ConcurrentModificationException
+//        Iterator<Map.Entry<Integer, Task>> taskIterator = taskHashMap.entrySet().iterator();
+//        while (taskIterator.hasNext()) {
+//            Map.Entry<Integer, Task> entry = taskIterator.next();
+//            if (entry.getKey().equals(id)) {
+//                taskIterator.remove();
+//            }
+//        }
+//        Iterator<Map.Entry<Integer, Epic>> epicIterator = epicHashMap.entrySet().iterator();
+//        while (epicIterator.hasNext()) {
+//            Map.Entry<Integer, Epic> entry = epicIterator.next();
+//            if (entry.getKey().equals(id)) {
+//                epicIterator.remove();
+//            }
+//        }
+//        Iterator<Map.Entry<Integer, Subtask>> subtaskIterator = subtaskHashMap.entrySet().iterator();
+//        while (subtaskIterator.hasNext()) {
+//            Map.Entry<Integer, Subtask> entry = subtaskIterator.next();
+//            if (entry.getKey().equals(id)) {
+//                subtaskIterator.remove();
+//            }
+//        }
+//    }
 
 
     //Обновление задач. Новая версия объекта и id передаются в виде параметра
@@ -221,8 +239,8 @@ public class TaskManager {
     //подумать над методом выбора, и если не 1 и не 2
 
 
-    public Task createUpdatedTask(Integer id) {
-        Task task = taskHashMap.get(id);
+    public Task updateTask(Integer id) {
+        Task task = getTaskById(id);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Изменить имя? 1 - да, 2 - нет");
         int choiceOne = scanner.nextInt();
@@ -272,18 +290,18 @@ public class TaskManager {
         return true;
     }
 
-    public void updateEpicStatus(Integer epicId) {
-        ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
-        ArrayList<String> allStatuses = new ArrayList<>();
-        for (int i = 0; i <= currentSubtasksList.size(); i++) {
-            allStatuses.add(currentSubtasksList.get(i).getStatus());
-            if (areAllSubtasksStatusesEqual(allStatuses, "NEW") || currentSubtasksList.size() == 0) {
-                taskHashMap.get(epicId).setStatus("NEW");
-            } else if (areAllSubtasksStatusesEqual(allStatuses, "DONE")) {
-                taskHashMap.get(epicId).setStatus("DONE");
-            } else {
-                taskHashMap.get(epicId).setStatus("IN PROGRESS");
-            }
-        }
-    }
+//    public void updateEpicStatus(Integer epicId) {
+//        ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
+//        ArrayList<String> allStatuses = new ArrayList<>();
+//        for (int i = 0; i <= currentSubtasksList.size(); i++) {
+//            allStatuses.add(currentSubtasksList.get(i).getStatus());
+//            if (areAllSubtasksStatusesEqual(allStatuses, "NEW") || currentSubtasksList.size() == 0) {
+//                taskHashMap.get(epicId).setStatus("NEW");
+//            } else if (areAllSubtasksStatusesEqual(allStatuses, "DONE")) {
+//                taskHashMap.get(epicId).setStatus("DONE");
+//            } else {
+//                taskHashMap.get(epicId).setStatus("IN PROGRESS");
+//            }
+//        }
+//    }
 }
