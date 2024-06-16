@@ -203,88 +203,76 @@ public class TaskManager {
             Epic epic = subtask.getEpic();
             deleteSubtaskFromEpic(epic.getId(), id);
             subtaskHashMap.remove(id);
-            //удалится ли связь с эпиком автомагически?
-            //ИЗ ЭПИКА НАДО УДАЛЯТЬ
-
         } else {
-            System.out.println("Элемент с ключом " + id + " не найден.");
+            System.out.println("Сабтаска с id " + id + " не найдена.");
         }
     }
-
-
-
-//
-//        //Использую итератор т.к. удаление элемента во время for вызывает ConcurrentModificationException
-//        Iterator<Map.Entry<Integer, Task>> taskIterator = taskHashMap.entrySet().iterator();
-//        while (taskIterator.hasNext()) {
-//            Map.Entry<Integer, Task> entry = taskIterator.next();
-//            if (entry.getKey().equals(id)) {
-//                taskIterator.remove();
-//            }
-//        }
-//        Iterator<Map.Entry<Integer, Epic>> epicIterator = epicHashMap.entrySet().iterator();
-//        while (epicIterator.hasNext()) {
-//            Map.Entry<Integer, Epic> entry = epicIterator.next();
-//            if (entry.getKey().equals(id)) {
-//                epicIterator.remove();
-//            }
-//        }
-//        Iterator<Map.Entry<Integer, Subtask>> subtaskIterator = subtaskHashMap.entrySet().iterator();
-//        while (subtaskIterator.hasNext()) {
-//            Map.Entry<Integer, Subtask> entry = subtaskIterator.next();
-//            if (entry.getKey().equals(id)) {
-//                subtaskIterator.remove();
-//            }
-//        }
-//    }
-
 
     //Обновление задач. Новая версия объекта и id передаются в виде параметра
     //Для эпика вместе с обновлением реализовать логику статусов
     //подумать над методом выбора, и если не 1 и не 2
 
-
-    public Task updateTask(Integer id) {
-        Task task = getTaskById(id);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Изменить имя? 1 - да, 2 - нет");
-        int choiceOne = scanner.nextInt();
-        if (choiceOne == 1) {
-            System.out.println("Введите название");
-            String name = scanner.nextLine();
-            task.setName(name);
-        } else {
-            System.out.println("Имя не изменено");
-        }
-        System.out.println("Изменить описание? 1 - да, 2 - нет");
-        int choiceTwo = scanner.nextInt();
-        if (choiceTwo == 1) {
-            System.out.println("Введите описание");
-            String description = scanner.nextLine();
-            task.setDescription(description);
-        } else {
-            System.out.println("Описание не изменено");
-        }
-        System.out.println("Изменить статус? 1 - да, 2 - нет");
-        int choiceThree = scanner.nextInt();
-        if (choiceThree == 1) {
-            System.out.println("Текущий статус: " + task.getStatus() + ". Введите новый статус. 1 - NEW. 2 - IN PROGRESS. 3 - DONE.");
-            int status = scanner.nextInt();
-            if (status == 1) {
-                task.setStatus("NEW");
-            } else if (status == 2) {
-                task.setStatus("IN PROGRESS");
-            } else if (status == 3) {
-                task.setStatus("DONE");
-            } else {
-                System.out.println("Статус не изменен");
-                task.setStatus(task.getStatus());
-            }
-        } else {
-            System.out.println("Статус не изменен");
-        }
-        return task;
+    public void updateTaskName(Integer id, String name) {
+        getTaskById(id).setName(name);
     }
+    public void updateTaskDescription(Integer id, String description) {
+        getTaskById(id).setDescription(description);
+    }
+    public void updateTaskStatus(Integer id, String status){
+        getTaskById(id).setStatus(status);
+    }
+
+    public boolean choice(int choice) {
+        if (choice == 1) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+//    public Task updateTask(Integer id) {
+//        Task task = getTaskById(id);
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Изменить имя? 1 - да, 2 - нет");
+//        int choiceOne = scanner.nextInt();
+//        if (choiceOne == 1) {
+//            System.out.println("Введите название");
+//            String name = scanner.nextLine();
+//            task.setName(name);
+//        } else {
+//            System.out.println("Имя не изменено");
+//        }
+//        System.out.println("Изменить описание? 1 - да, 2 - нет");
+//        int choiceTwo = scanner.nextInt();
+//        if (choiceTwo == 1) {
+//            System.out.println("Введите описание");
+//            String description = scanner.nextLine();
+//            task.setDescription(description);
+//        } else {
+//            System.out.println("Описание не изменено");
+//        }
+//        System.out.println("Изменить статус? 1 - да, 2 - нет");
+//        int choiceThree = scanner.nextInt();
+//        if (choiceThree == 1) {
+//            System.out.println("Текущий статус: " + task.getStatus() + ". Введите новый статус. 1 - NEW. 2 - IN PROGRESS. 3 - DONE.");
+//            int status = scanner.nextInt();
+//            if (status == 1) {
+//                task.setStatus("NEW");
+//            } else if (status == 2) {
+//                task.setStatus("IN PROGRESS");
+//            } else if (status == 3) {
+//                task.setStatus("DONE");
+//            } else {
+//                System.out.println("Статус не изменен");
+//                task.setStatus(task.getStatus());
+//            }
+//        } else {
+//            System.out.println("Статус не изменен");
+//        }
+//        return task;
+//    }
 
     public static boolean areAllSubtasksStatusesEqual(ArrayList<String> list, String status) {
         for (String element : list) {

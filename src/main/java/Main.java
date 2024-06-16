@@ -47,7 +47,7 @@ public class Main {
                     manager.addSubtaskToEpic(epicId, subtask);
                     manager.addSubtaskToStorage(subtask);
                     manager.printSubtask(subtask);
-                }else {
+                } else {
                     System.out.println("Нет такого Эпика");
                 }
             } else if (userInput == 5) {
@@ -75,9 +75,39 @@ public class Main {
                 System.out.println("Все удалено!.");
                 manager.deleteAll();
             } else if (userInput == 12) {
-                System.out.println("Введите ID тикета для обновления.");
+                scanner.nextLine();
+                System.out.println("Введите ID Задачи для обновления.");
                 int id = scanner.nextInt();
-                manager.addTaskToStorage(manager.updateTask(id));
+                scanner.nextLine();
+                System.out.println("Изменить название? 1 - да, 2 - нет");
+                int choice = scanner.nextInt();
+                if (manager.choice(choice)) {
+                    System.out.println("Введите название");
+                    String name = scanner.nextLine();
+                    manager.updateTaskName(id, name);
+                } else {
+                    System.out.println("Имя не изменено");
+                }
+                scanner.nextLine();
+                System.out.println("Изменить описание? 1 - да, 2 - нет");
+                if (manager.choice(choice)) {
+                    scanner.nextLine();
+                    System.out.println("Введите описание");
+                    String description = scanner.nextLine();
+                    manager.updateTaskDescription(id, description);
+                }else {
+                    System.out.println("Описание не изменено");
+                }
+                scanner.nextLine();
+                System.out.println("Изменить статус? 1 - да, 2 - нет");
+                if (manager.choice(choice)) {
+                    //СДЕЛАТЬ ограничение на ввод статусов только NEW IN PROGRESS DONE
+                    String status = scanner.nextLine();
+                    manager.updateTaskStatus(id, status);
+                }else {
+                    System.out.println("Статус не изменен");
+                }
+
             } else {
                 System.out.println("Выберите вариант из меню.");
             }
