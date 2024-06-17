@@ -130,6 +130,8 @@ public class Main {
         System.out.println("11 - Удалить все.");
         System.out.println("12 - Обновить Task через обновление каждого поля отдельно.");
         System.out.println("13 - Обновить Task через метод принимающий task.");
+        System.out.println("14 - Обновить Epic через метод принимающий epic.");
+        System.out.println("15 - Обновить Subtask через метод принимающий subtask.");
         System.out.println("0 - Выход.");
     }
 }
