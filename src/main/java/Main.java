@@ -15,6 +15,7 @@ public class Main {
                 manager.getEpics();
                 manager.getSubtasks();
             } else if (userInput == 2) {
+                //Создать Task
                 scanner.nextLine();
                 System.out.println("Введите название Задачи");
                 String name = scanner.nextLine();
@@ -24,7 +25,7 @@ public class Main {
                 manager.addTaskToStorage(task);
                 manager.printTask(task);
             } else if (userInput == 3) {
-                //Создать задачу Epic.
+                //Создать Epic.
                 scanner.nextLine();
                 System.out.println("Введите название Эпика");
                 String name = scanner.nextLine();
@@ -34,11 +35,11 @@ public class Main {
                 manager.addEpicToStorage(epic);
                 manager.printEpic(epic);
             } else if (userInput == 4) {
-                //Создать Подзадачу.
+                //Создать Subtask.
                 System.out.println("Введите ID эпика, в котором нужно создать подзадачу.");
                 int epicId = scanner.nextInt();
                 scanner.nextLine();
-                if (manager.isEpicIdEqualToKey(epicId)) {
+                if (manager.isEpicId(epicId)) {
                     System.out.println("Введите название Сабтаски");
                     String name = scanner.nextLine();
                     System.out.println("Введите описание Сабтаски");
@@ -127,7 +128,8 @@ public class Main {
         System.out.println("9 - Вывести по id.");
         System.out.println("10 - Удалить по id.");
         System.out.println("11 - Удалить все.");
-        System.out.println("12 - Обновить Task.");
+        System.out.println("12 - Обновить Task через обновление каждого поля отдельно.");
+        System.out.println("13 - Обновить Task через метод принимающий task.");
         System.out.println("0 - Выход.");
     }
 }

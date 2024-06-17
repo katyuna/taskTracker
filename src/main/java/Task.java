@@ -47,4 +47,5 @@ public class Task {
     public void setType(String type) {
         this.type = type;
     }
+
 }
