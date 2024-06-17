@@ -70,7 +70,7 @@ public class TaskManager {
             ArrayList<Subtask> listSubtasksInEpic = epicValue.getListSubtasksInEpic();
             for (int i = 0; i < listSubtasksInEpic.size(); i++) {
                 Subtask subtask = listSubtasksInEpic.get(i);
-                if (subtask.getId() == subtaskId) {
+                if (subtask.getId().equals(subtaskId)) {
                     listSubtasksInEpic.remove(i);
                     break; // Выходим из цикла, так как мы нашли и удалили нужную подзадачу
                 }
@@ -78,6 +78,7 @@ public class TaskManager {
         }
     }
      //Печать тикетов
+
     public void printTask(Task task){
         System.out.println(task.getType() + " " + task.getStatus() + " ID " + task.getId() + ": " + task.getName() + ". Description: " + task.getDescription());
     }
@@ -156,26 +157,17 @@ public class TaskManager {
 
     //Пeчать тикета по id
     public void printIssueById(Integer id) {
-        for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
-            Integer taskKey = entry.getKey();
-            Task taskValue = entry.getValue();
-            if (id.equals(taskKey)) {
-                printTask(taskValue);
-            }
-        }
-        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
-            Integer epicKey = entry.getKey();
-            Epic epicValue = entry.getValue();
-            if (id.equals(epicKey)) {
-                printEpic(epicValue);
-            }
-        }
-        for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
-            Integer subtaskKey = entry.getKey();
-            Subtask subtaskValue = entry.getValue();
-            if (id.equals(subtaskKey)) {
-                printSubtask(subtaskValue);
-            }
+        if (taskHashMap.containsKey(id)){
+            Task task = taskHashMap.get(id);
+            printTask(task);
+        } else if (epicHashMap.containsKey(id)) {
+            Epic epic = epicHashMap.get(id);
+            printEpic(epic);
+        } else if (subtaskHashMap.containsKey(id)) {
+            Subtask subtask = subtaskHashMap.get(id);
+            printSubtask(subtask);
+        }else {
+            System.out.println("Тикет с id " + id + " не найден.");
         }
     }
 
