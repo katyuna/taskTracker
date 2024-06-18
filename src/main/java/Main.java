@@ -100,8 +100,8 @@ public class Main {
                     System.out.println("Описание не изменено");
                 }
                 System.out.println("Изменить статус? 1 - да, 2 - нет");
-                choice = scanner.nextInt();  // Измените это, чтобы считывать новый выбор
-                scanner.nextLine();  // Добавьте это для потребления новой строки
+                choice = scanner.nextInt();
+                scanner.nextLine();
                 if (manager.choice(choice)) {
                     System.out.println("Введите новый статус");
                     String status = scanner.nextLine();
@@ -110,7 +110,24 @@ public class Main {
                     System.out.println("Статус не изменен");
                 }
 
-            } else {
+            } else if (userInput == 13) {
+                System.out.println("Введите id для обновления");
+                Integer id = scanner.nextInt();
+                manager.updateTask(manager.getTaskById(id));
+            }else if (userInput == 14) {
+                System.out.println("Введите id для обновления");
+                Integer id = scanner.nextInt();
+                manager.updateEpic(manager.getEpicById(id));
+            }else if (userInput == 15) {
+                System.out.println("Введите id для обновления");
+                Integer id = scanner.nextInt();
+                manager.updateSubtask(manager.getSubtaskById(id));
+            }else if (userInput == 16) {
+                System.out.println("Введите id для обновления");
+                Integer id = scanner.nextInt();
+
+            }
+            else {
                 System.out.println("Выберите вариант из меню.");
             }
         }
@@ -132,6 +149,7 @@ public class Main {
         System.out.println("13 - Обновить Task через метод принимающий task.");
         System.out.println("14 - Обновить Epic через метод принимающий epic.");
         System.out.println("15 - Обновить Subtask через метод принимающий subtask.");
+        System.out.println("16 - Обновить любую.");
         System.out.println("0 - Выход.");
     }
 }
