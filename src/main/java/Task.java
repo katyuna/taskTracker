@@ -12,6 +12,10 @@ public class Task {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "{type='"+type+"', status='" + status + "', id=" + id + ", name='" + name + "', description='" + description + "'}";
+    }
     public Integer getId() {
         return id;
     }

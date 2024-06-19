@@ -3,7 +3,7 @@ import java.util.*;
 public class TaskManager {
     private static Integer currentId = 0;
 
-    //Хранение тикетов
+    //Хранилища тикетов
     HashMap<Integer, Task> taskHashMap = new HashMap<>();
     HashMap<Integer, Epic> epicHashMap = new HashMap<>();
     HashMap<Integer, Subtask> subtaskHashMap = new HashMap<>();
@@ -47,6 +47,32 @@ public class TaskManager {
         subtask.setStatus("NEW");
         subtask.setType("Subtask");
         return subtask;
+    }
+
+    //Получение списка всех Задач
+    public ArrayList<Task> getTasksList() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
+            tasks.add(entry.getValue());
+        }
+        return tasks;
+    }
+
+    //Получение списка всех Эпиков
+    public ArrayList<Epic> getEpicsList() {
+        ArrayList<Epic> epics = new ArrayList<>();
+        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
+            epics.add(entry.getValue());
+        }
+        return epics;
+    }
+    //Получение списка всех Сабтасок
+    public ArrayList<Subtask> getSubtasksList() {
+        ArrayList<Subtask> subtasks = new ArrayList<>();
+        for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
+            subtasks.add(entry.getValue());
+        }
+        return subtasks;
     }
 
     //Проверка есть ли id в хранилище
@@ -101,13 +127,14 @@ public class TaskManager {
         return epicValue.getListSubtasksInEpic();
     }
 
-   //Получение Задачи по id
+    //Получение Задачи по id
     public Task getTaskById(Integer id) {
         if (isTaskId(id)) {
             return taskHashMap.get(id);
         }
         return null;
     }
+
     //Получение Эпика по id
     public Epic getEpicById(Integer id) {
         if (isEpicId(id)) {
@@ -116,6 +143,7 @@ public class TaskManager {
         }
         return null;
     }
+
     //Получение Сабтаски по id
     public Subtask getSubtaskById(Integer id) {
         if (isSubtaskId(id)) {
@@ -124,45 +152,32 @@ public class TaskManager {
         return null;
     }
 
-//    public Object getIssueById(Integer id){
-//        if (isTaskId(id)) {
-//            return taskHashMap.get(id);
-//        }if (isEpicId(id)) {
-//            return epicHashMap.get(id);
-//        }if (isSubtaskId(id)) {
-//            return subtaskHashMap.get(id);
-//        }
-//        return null;
-//    }
-
-
-
     //Удаление всех задач
     public void deleteAll() {
-        //удаление ссылок на объекты, если нет ссылок - сборщик мусора удалит объекты
         subtaskHashMap.clear();
         taskHashMap.clear();
         epicHashMap.clear();
-        //Обнуляем id, чтобы при новом создании снова id начинались в 0
         TaskManager.currentId = 0;
     }
 
-    //Удаление задачи по id
+    //Удаление тикетов по id
     public void deleteById(Integer id) {
         if (isTaskId(id)) {
-            // Удаляем элемент с заданным ключом
             taskHashMap.remove(id);
         } else if (isEpicId(id)) {
+            //Если удаляю эпик, то удаляю и его подзадачи
+            ArrayList<Subtask> subtasks = getSubtasksInEpic(id);
+            for (int i = 0; i < subtasks.size(); i++) {
+                subtaskHashMap.remove(subtasks.get(i).getId());
+            }
             epicHashMap.remove(id);
-            //Подзадачи тоже грохнуть?
-
         } else if (isSubtaskId(id)) {
             Subtask subtask = subtaskHashMap.get(id);
             Epic epic = subtask.getEpic();
             deleteSubtaskFromEpic(epic.getId(), id);
             subtaskHashMap.remove(id);
         } else {
-            System.out.println("Сабтаска с id " + id + " не найдена.");
+            System.out.println("Тикет с id " + id + " не найден.");
         }
     }
 
@@ -186,12 +201,13 @@ public class TaskManager {
     private void updateEpicDescription(Integer id, String description) {
         getEpicById(id).setDescription(description);
     }
+
     private void updateEpicStatus(Integer id, String status) {
         getEpicById(id).setStatus(status);
     }
 
     //Метод выбора варианта 1 или 2 для меню
-      public boolean choice(int choice) {
+    public boolean choice(int choice) {
         if (choice == 1) {
             return true;
         }
@@ -203,20 +219,25 @@ public class TaskManager {
     //Кажется, так не сработает.
     //Определить тип объекта, который передали в метод.
     //Привести объект к соответствующему типу.
-    public void updateIssue (Object object){
-        if (object instanceof  Task){
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Новое имя");
-            updateTaskName(((Task) object).getId(), scanner.nextLine());
-            System.out.println("Новое описание");
-            updateTaskDescription(((Task) object).getId(), scanner.nextLine());
-            System.out.println("Новый статус");
-            updateTaskStatus(((Task) object).getId(), scanner.nextLine());
-        }//if Эпик if Сабтаска.
+    public void updateIssue(Object object, String name, String description, String status) {
+        if (object instanceof Task) {
+            Task task = (Task) object;
+            Integer id = task.getId();
+
+            updateTaskName(((Task) object).getId(), name);
+            updateTaskDescription(((Task) object).getId(), description);
+            updateTaskStatus(((Task) object).getId(), status);
+        }
+        if (object instanceof Epic) {
+
+        }
+        if (object instanceof Subtask) {
+
+        }
     }
 
 
-//Обновление тикетов
+    //Обновление тикетов
     public void updateTask(Task task) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Новое имя");
@@ -236,6 +257,7 @@ public class TaskManager {
         System.out.println("Новый статус");
         updateEpicStatus(epic.getId(), scanner.nextLine());
     }
+
     public void updateSubtask(Subtask subtask) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Новое имя");
@@ -245,8 +267,6 @@ public class TaskManager {
         System.out.println("Новый статус");
         updateEpicStatus(subtask.getId(), scanner.nextLine());
     }
-
-
 
 
     public static boolean areAllSubtasksStatusesEqual(ArrayList<String> list, String status) {
@@ -276,57 +296,40 @@ public class TaskManager {
 
     //МЕТОДЫ ДЛЯ ПЕЧАТИ
 
-    //Печать тикетов
-    public void printTask(Task task) {
-        System.out.println(task.getType() + " " + task.getStatus() + " ID " + task.getId() + ": " + task.getName() + ". Description: " + task.getDescription());
-    }
-
-    public void printEpic(Epic epic) {
-        System.out.println(epic.getType() + " " + epic.getStatus() + " ID " + epic.getId() + ": " + epic.getName() + ". Description: " + epic.getDescription() + " -> Subtasks in this Epic: " + epic.getListSubtasksInEpic());
-    }
-
-    public void printSubtask(Subtask subtask) {
-        System.out.println(subtask.getType() + " " + subtask.getStatus() + " ID " + subtask.getId() + ": " + subtask.getName() + ". Description: " + subtask.getDescription() + "  -> This Subtask in Epic: " + subtask.epic);
-    }
-
     //Печать списков тикетов
-    public void getTasks() {
-        for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
-            Task task = entry.getValue();
-            printTask(task);
+    public void printTasks() {
+        for (Task task : getTasksList()) {
+            System.out.println(task);
         }
     }
 
-    public void getEpics() {
-        for (Map.Entry<Integer, Epic> entry : epicHashMap.entrySet()) {
-            Epic epic = entry.getValue();
-            printEpic(epic);
+    public void printEpics() {
+        for (Epic epic : getEpicsList()) {
+            System.out.println(epic);
         }
     }
 
-    public void getSubtasks() {
-        for (Map.Entry<Integer, Subtask> entry : subtaskHashMap.entrySet()) {
-            Subtask subtask = entry.getValue();
-            printSubtask(subtask);
+    public void printSubtasks() {
+        for (Subtask subtask : getSubtasksList()) {
+            System.out.println(subtask);
         }
     }
 
     //Печать всех подзадач эпика
     public void printSubtasksInEpic(Integer epicId) {
-        ArrayList<Subtask> subtasksInEpic = getSubtasksInEpic(epicId);
-        for (int i = 0; i < subtasksInEpic.size(); i++) {
-            System.out.println(subtasksInEpic.get(i).getType() + " " + subtasksInEpic.get(i).getStatus() + " " + subtasksInEpic.get(i).getId() + ": " + subtasksInEpic.get(i).getName() + ". Description: " + subtasksInEpic.get(i).getDescription());
+        for (Subtask subtask : getSubtasksInEpic(epicId)) {
+            System.out.println(subtask);
         }
     }
 
     //Пeчать тикета по id
     public void printIssueById(Integer id) {
         if (isTaskId(id)) {
-            printTask(taskHashMap.get(id));
+            System.out.println(taskHashMap.get(id));
         } else if (isEpicId(id)) {
-            printEpic(epicHashMap.get(id));
+            System.out.println(epicHashMap.get(id));
         } else if (isSubtaskId(id)) {
-            printSubtask(subtaskHashMap.get(id));
+            System.out.println(subtaskHashMap.get(id));
         } else {
             System.out.println("Тикет с id " + id + " не найден.");
         }
