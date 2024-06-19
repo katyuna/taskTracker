@@ -181,92 +181,22 @@ public class TaskManager {
         }
     }
 
-    //Обновление полей тикетов
-    public void updateTaskName(Integer id, String name) {
-        getTaskById(id).setName(name);
+    //ОБНОВЛЕНИЕ
+    //Замена тикетов на новые в хранилище
+    public void replaceTaskInStorage(Task task) {
+        taskHashMap.replace(task.getId(), task);
     }
 
-    public void updateTaskDescription(Integer id, String description) {
-        getTaskById(id).setDescription(description);
+    public void replaceEpicInStorage(Epic epic) {
+        epicHashMap.replace(epic.getId(), epic);
     }
 
-    public void updateTaskStatus(Integer id, String status) {
-        getTaskById(id).setStatus(status);
-    }
-
-    private void updateEpicName(Integer id, String name) {
-        getEpicById(id).setName(name);
-    }
-
-    private void updateEpicDescription(Integer id, String description) {
-        getEpicById(id).setDescription(description);
-    }
-
-    private void updateEpicStatus(Integer id, String status) {
-        getEpicById(id).setStatus(status);
-    }
-
-    //Метод выбора варианта 1 или 2 для меню
-    public boolean choice(int choice) {
-        if (choice == 1) {
-            return true;
-        }
-        return false;
-    }
-
-    //Общий метод для апдейта тикета по id
-    //Нужен общий метод получения огбъекта для передачи в этот метод
-    //Кажется, так не сработает.
-    //Определить тип объекта, который передали в метод.
-    //Привести объект к соответствующему типу.
-    public void updateIssue(Object object, String name, String description, String status) {
-        if (object instanceof Task) {
-            Task task = (Task) object;
-            Integer id = task.getId();
-
-            updateTaskName(((Task) object).getId(), name);
-            updateTaskDescription(((Task) object).getId(), description);
-            updateTaskStatus(((Task) object).getId(), status);
-        }
-        if (object instanceof Epic) {
-
-        }
-        if (object instanceof Subtask) {
-
-        }
+    public void replaceSubtaskInStorage(Subtask subtask) {
+        subtaskHashMap.replace(subtask.getId(), subtask);
     }
 
 
-    //Обновление тикетов
-    public void updateTask(Task task) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Новое имя");
-        updateTaskName(task.getId(), scanner.nextLine());
-        System.out.println("Новое описание");
-        updateTaskDescription(task.getId(), scanner.nextLine());
-        System.out.println("Новый статус");
-        updateTaskStatus(task.getId(), scanner.nextLine());
-    }
-
-    public void updateEpic(Epic epic) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Новое имя");
-        updateEpicName(epic.getId(), scanner.nextLine());
-        System.out.println("Новое описание");
-        updateEpicDescription(epic.getId(), scanner.nextLine());
-        System.out.println("Новый статус");
-        updateEpicStatus(epic.getId(), scanner.nextLine());
-    }
-
-    public void updateSubtask(Subtask subtask) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Новое имя");
-        updateEpicName(subtask.getId(), scanner.nextLine());
-        System.out.println("Новое описание");
-        updateEpicDescription(subtask.getId(), scanner.nextLine());
-        System.out.println("Новый статус");
-        updateEpicStatus(subtask.getId(), scanner.nextLine());
-    }
+    //УПРАВЛЕНИЕ СТАТУСАМИ
 
 
     public static boolean areAllSubtasksStatusesEqual(ArrayList<String> list, String status) {
@@ -293,6 +223,14 @@ public class TaskManager {
 //        }
 //    }
 
+
+    //Метод выбора варианта 1 или 2 для меню
+    public boolean choice(int choice) {
+        if (choice == 1) {
+            return true;
+        }
+        return false;
+    }
 
     //МЕТОДЫ ДЛЯ ПЕЧАТИ
 

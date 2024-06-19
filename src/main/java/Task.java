@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Task {
     private final Integer id;
     private String name;
@@ -10,6 +8,14 @@ public class Task {
     //Конструктор
     public Task(Integer id) {
         this.id = id;
+    }
+
+    public Task(String type, Integer id, String name, String description, String status) {
+        this.type = type;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
     }
 
     @Override
