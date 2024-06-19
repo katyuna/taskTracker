@@ -16,8 +16,8 @@ public class Epic extends Task {
         return listSubtasksInEpic;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + ", subtasks=" + getListSubtasksInEpic();
-    }
+//    @Override
+//    public String toString() {
+//        return super.toString() + ", Subtasks=" + listSubtasksInEpic;
+//    }
 }
