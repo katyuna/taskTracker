@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -13,7 +14,7 @@ public class Main {
             } else if (userInput == 1) {
                 manager.printTasks();
                 manager.printEpics();
-                manager.printSubtasks();
+                manager.printSubtasksWithEpic();
             } else if (userInput == 2) {
                 //Создать Task
                 scanner.nextLine();
@@ -37,19 +38,23 @@ public class Main {
             } else if (userInput == 4) {
                 //Создать Subtask.
                 System.out.println("Введите ID эпика, в котором нужно создать подзадачу.");
-                int epicId = scanner.nextInt();
-                scanner.nextLine();
-                if (manager.isEpicId(epicId)) {
-                    System.out.println("Введите название Сабтаски");
-                    String name = scanner.nextLine();
-                    System.out.println("Введите описание Сабтаски");
-                    String description = scanner.nextLine();
-                    Subtask subtask = manager.createSubtask(name, description);
-                    manager.addSubtaskToEpic(epicId, subtask);
-                    manager.addSubtaskToStorage(subtask);
-                    System.out.println(subtask);
-                } else {
-                    System.out.println("Нет такого Эпика");
+                if (scanner.hasNextInt()){
+                    int epicId = scanner.nextInt();
+                    scanner.nextLine();
+                    if (manager.isEpicId(epicId)) {
+                        System.out.println("Введите название Сабтаски");
+                        String name = scanner.nextLine();
+                        System.out.println("Введите описание Сабтаски");
+                        String description = scanner.nextLine();
+                        Subtask subtask = manager.createSubtask(name, description);
+                        manager.addSubtaskToEpic(epicId, subtask);
+                        manager.addSubtaskToStorage(subtask);
+                        System.out.println(subtask);
+                    } else {
+                        System.out.println("Нет такого Эпика");
+                    }
+                }else {
+                    System.out.println("Ошибка: введен не id.");
                 }
             } else if (userInput == 5) {
                 //Показать список Тасок
@@ -81,24 +86,27 @@ public class Main {
             } else if (userInput == 12) {
                 System.out.println("Введите id для обновления");
                 Integer id = scanner.nextInt();
+                scanner.nextLine();
                 System.out.println("Новое имя");
                 String name = scanner.nextLine();
-                scanner.nextLine();
                 System.out.println("Новое описание");
                 String description = scanner.nextLine();
-                scanner.nextLine();
-                System.out.println("Новый статус");
-                String status = scanner.nextLine();
                 if (manager.isTaskId(id)) {
+                    System.out.println("Новый статус");
+                    String status = scanner.nextLine();
                     Task task = new Task("Task", id, name, description, status);
                     manager.replaceTaskInStorage(task);
-                }
-                if (manager.isEpicId(id)) {
-                    Epic epic = new Epic("Epic", id, name, description,status);
+                } else if (manager.isEpicId(id)) {
+                    System.out.println("Новый статус");
+                    String status = scanner.nextLine();
+                    ArrayList<Subtask> subtasks = manager.getEpicById(id).getListSubtasksInEpic();
+                    Epic epic = new Epic("Epic", id, name, description, status, subtasks);
                     manager.replaceEpicInStorage(epic);
-                }
-                if (manager.isSubtaskId(id)) {
-                    Subtask subtask = new Subtask("Subtask", id, name, description,status);
+                } else if (manager.isSubtaskId(id)) {
+                    System.out.println("Новый статус");
+                    String status = scanner.nextLine();
+                    Epic epic = manager.getSubtaskById(id).getEpic();
+                    Subtask subtask = new Subtask("Subtask", id, name, description,status, epic);
                     manager.replaceSubtaskInStorage(subtask);
                 }
             }else {

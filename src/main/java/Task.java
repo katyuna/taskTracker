@@ -22,22 +22,22 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Type=" + type + ", status=" + status + " , id=" + id + ", name=" + name + ", description=" + description;
+        return "Type=" + type + ", status=" + status + " , id=" + id + ", name=" + name + ", description=" + description +".";
     }
 
     //РАЗОБРАТЬСЯ ПОЧЕМУ ЭТИ МЕТОДЫ ТОЖЕ НАДО ПЕРЕОПРЕДЕЛЯТЬ
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Task task = (Task) object;
-        return Objects.equals(id, task.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+//    @Override
+//    public boolean equals(Object object) {
+//        if (this == object) return true;
+//        if (object == null || getClass() != object.getClass()) return false;
+//        Task task = (Task) object;
+//        return Objects.equals(id, task.id);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id);
+//    }
 
 
 

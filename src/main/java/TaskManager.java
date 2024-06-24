@@ -208,6 +208,24 @@ public class TaskManager {
         return true;
     }
 
+
+    public String checkEpicStatus(Integer epicId){
+        ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
+        ArrayList<String> allStatuses = new ArrayList<>();
+        for (int i = 0; i <= currentSubtasksList.size(); i++) {
+            allStatuses.add(currentSubtasksList.get(i).getStatus());
+            if (areAllSubtasksStatusesEqual(allStatuses, "NEW") || currentSubtasksList.size() == 0) {
+               return "NEW";
+            } else if (areAllSubtasksStatusesEqual(allStatuses, "DONE")) {
+                return "DONE";
+            } else {
+                return "IN PROGRESS";
+            }
+        }
+        return null;
+    }
+
+
 //    public void updateEpicStatus(Integer epicId) {
 //        ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
 //        ArrayList<String> allStatuses = new ArrayList<>();
@@ -250,6 +268,13 @@ public class TaskManager {
     public void printSubtasks() {
         for (Subtask subtask : getSubtasksList()) {
             System.out.println(subtask);
+        }
+    }
+
+    public  void printSubtasksWithEpic(){
+        for (Subtask subtask : getSubtasksList()) {
+            System.out.print(subtask);
+            System.out.println(" EpicID=" + subtask.getEpic().getId());
         }
     }
 

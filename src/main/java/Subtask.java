@@ -4,8 +4,9 @@ public class Subtask extends Task {
         super(id);
     }
 
-    public Subtask(String type, Integer id, String name, String description, String status) {
+    public Subtask(String type, Integer id, String name, String description, String status, Epic epic) {
         super(type, id, name, description, status);
+        this.epic=epic;
     }
 
     public Epic getEpic() {
@@ -15,9 +16,4 @@ public class Subtask extends Task {
     public void setEpic(Epic epic) {
         this.epic = epic;
     }
-
-//    @Override
-//    public String toString() {
-//        return super.toString() + ", Epic=" + epic;
-//    }
 }
