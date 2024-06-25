@@ -106,6 +106,7 @@ public class TaskManager {
         }
     }
 
+
     //Удаление подзадачи из Эпика
     public void deleteSubtaskFromEpic(Integer epicId, Integer subtaskId) {
         if (isEpicId(epicId)) {
@@ -182,6 +183,25 @@ public class TaskManager {
     }
 
     //ОБНОВЛЕНИЕ
+    //Обновление подзадачи в эпике
+    public void replaceSubtaskInEpic(Integer id, Subtask subtask) {
+        if (isEpicId(id)) {
+            Epic epicValue = epicHashMap.get(id);
+            ArrayList<Subtask> subtasks = epicValue.getListSubtasksInEpic();
+            boolean found = false;
+            for (int i = 0; i < subtasks.size(); i++) {
+                if (subtasks.get(i).equals(subtask)) {
+                    subtasks.set(i, subtask);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.println("Объект не найден в списке.");
+            }
+        }
+    }
+
     //Замена тикетов на новые в хранилище
     public void replaceTaskInStorage(Task task) {
         taskHashMap.replace(task.getId(), task);
@@ -193,37 +213,61 @@ public class TaskManager {
 
     public void replaceSubtaskInStorage(Subtask subtask) {
         subtaskHashMap.replace(subtask.getId(), subtask);
+
     }
 
 
     //УПРАВЛЕНИЕ СТАТУСАМИ
 
+//    public static boolean areAllSubtasksStatusesEqual(ArrayList<String> list, String status) {
+//        for (String element : list) {
+//            if (!element.equals(status)) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
-    public static boolean areAllSubtasksStatusesEqual(ArrayList<String> list, String status) {
-        for (String element : list) {
-            if (!element.equals(status)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-
-    public String checkEpicStatus(Integer epicId){
+    public String checkEpicStatus(Integer epicId) {
         ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
-        ArrayList<String> allStatuses = new ArrayList<>();
-        for (int i = 0; i <= currentSubtasksList.size(); i++) {
-            allStatuses.add(currentSubtasksList.get(i).getStatus());
-            if (areAllSubtasksStatusesEqual(allStatuses, "NEW") || currentSubtasksList.size() == 0) {
-               return "NEW";
-            } else if (areAllSubtasksStatusesEqual(allStatuses, "DONE")) {
-                return "DONE";
-            } else {
-                return "IN PROGRESS";
+        boolean allNew = true;
+        boolean allDone = true;
+        if (currentSubtasksList.isEmpty()) {
+            return "NEW";
+        }
+        for (Subtask subtask : currentSubtasksList) {
+            if (!subtask.getStatus().equals("NEW")) {
+                allNew = false;
+            }
+            if (!subtask.getStatus().equals("DONE")) {
+                allDone = false;
             }
         }
-        return null;
+        if (allNew) {
+            return "NEW";
+        } else if (allDone) {
+            return "DONE";
+        } else {
+            return "IN PROGRESS";
+        }
     }
+
+//    public String checkEpicStatus1(Integer epicId){
+//        ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
+//        ArrayList<String> allStatuses = new ArrayList<>();
+//        for (int i = 0; i < currentSubtasksList.size(); i++) {
+//            allStatuses.add(currentSubtasksList.get(i).getStatus());
+//            if (areAllSubtasksStatusesEqual(allStatuses, "NEW") || currentSubtasksList.size() == 0) {
+//               return "NEW";
+//            } else if (areAllSubtasksStatusesEqual(allStatuses, "DONE")) {
+//                return "DONE";
+//            } else {
+//                return "IN PROGRESS";
+//            }
+//        }
+//        return null;
+//    }
 
 
 //    public void updateEpicStatus(Integer epicId) {

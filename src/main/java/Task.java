@@ -19,32 +19,28 @@ public class Task {
         this.description = description;
         this.status = status;
     }
-
+    // Переопределение метода toString для строкового представления объекта
     @Override
     public String toString() {
         return "Type=" + type + ", status=" + status + " , id=" + id + ", name=" + name + ", description=" + description +".";
     }
-
-    //РАЗОБРАТЬСЯ ПОЧЕМУ ЭТИ МЕТОДЫ ТОЖЕ НАДО ПЕРЕОПРЕДЕЛЯТЬ
-//    @Override
-//    public boolean equals(Object object) {
-//        if (this == object) return true;
-//        if (object == null || getClass() != object.getClass()) return false;
-//        Task task = (Task) object;
-//        return Objects.equals(id, task.id);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id);
-//    }
-
-
-
-
-
-
-
+    // Переопределение метода equals и hashCode для сравнения объектов по полям
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true; //сравниваем ссылки
+        if (object == null) return false; //проверяем ссылку на null
+        if (this.getClass() != object.getClass()) return false; //сравниваем классы объектов
+        Task task = (Task) object;
+        return Objects.equals(type, task.type) && //сравниваем все поля
+                Objects.equals(id, task.id) &&
+                Objects.equals(name, task.name) &&
+                Objects.equals(description, task.description) &&
+                Objects.equals(status, task.status);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, id, name, description, status);
+    }
 
     public Integer getId() {
         return id;
