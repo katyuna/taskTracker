@@ -19,6 +19,10 @@ public class Epic extends Task {
         return listSubtasksInEpic;
     }
 
+    public void setListSubtasksInEpic(ArrayList<Subtask> listSubtasksInEpic) {
+        this.listSubtasksInEpic = listSubtasksInEpic;
+    }
+
     @Override
     public String toString() {
         return super.toString() + " Subtasks=" + listSubtasksInEpic;

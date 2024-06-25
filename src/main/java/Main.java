@@ -108,7 +108,8 @@ public class Main {
                     Epic epic = manager.getSubtaskById(id).getEpic();
                     Subtask subtask = new Subtask("Subtask", id, name, description, status, epic);
                     manager.replaceSubtaskInStorage(subtask);
-                   // manager.addSubtaskToEpic(subtask.getEpic().getId(), subtask);
+                    manager.replaceSubtaskInEpic(subtask.getEpic().getId(), subtask);
+                   manager. checkEpicStatus(subtask.getEpic().getId());
                 }
             }else {
                 System.out.println("Выберите вариант из меню.");

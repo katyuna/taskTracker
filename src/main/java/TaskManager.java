@@ -188,16 +188,16 @@ public class TaskManager {
         if (isEpicId(id)) {
             Epic epicValue = epicHashMap.get(id);
             ArrayList<Subtask> subtasks = epicValue.getListSubtasksInEpic();
-            boolean found = false;
             for (int i = 0; i < subtasks.size(); i++) {
-                if (subtasks.get(i).equals(subtask)) {
+                if (subtasks.get(i).getId().equals(subtask.getId())) {
                     subtasks.set(i, subtask);
-                    found = true;
+                    //надо теперь список сабтасков отдать обратно в эпик
+                    epicValue.setListSubtasksInEpic(subtasks); // Устанавливаем обновленный список в Epic
+                    epicHashMap.put(id, epicValue); // Обновляем Epic в HashMap
                     break;
+                } else {
+                    System.out.println("Объект не найден в списке.");
                 }
-            }
-            if (!found) {
-                System.out.println("Объект не найден в списке.");
             }
         }
     }
