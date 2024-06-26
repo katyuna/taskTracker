@@ -218,17 +218,6 @@ public class TaskManager {
 
 
     //УПРАВЛЕНИЕ СТАТУСАМИ
-
-//    public static boolean areAllSubtasksStatusesEqual(ArrayList<String> list, String status) {
-//        for (String element : list) {
-//            if (!element.equals(status)) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
-
     public String checkEpicStatus(Integer epicId) {
         ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
         boolean allNew = true;
@@ -253,39 +242,6 @@ public class TaskManager {
         }
     }
 
-//    public String checkEpicStatus1(Integer epicId){
-//        ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
-//        ArrayList<String> allStatuses = new ArrayList<>();
-//        for (int i = 0; i < currentSubtasksList.size(); i++) {
-//            allStatuses.add(currentSubtasksList.get(i).getStatus());
-//            if (areAllSubtasksStatusesEqual(allStatuses, "NEW") || currentSubtasksList.size() == 0) {
-//               return "NEW";
-//            } else if (areAllSubtasksStatusesEqual(allStatuses, "DONE")) {
-//                return "DONE";
-//            } else {
-//                return "IN PROGRESS";
-//            }
-//        }
-//        return null;
-//    }
-
-
-//    public void updateEpicStatus(Integer epicId) {
-//        ArrayList<Subtask> currentSubtasksList = getSubtasksInEpic(epicId);
-//        ArrayList<String> allStatuses = new ArrayList<>();
-//        for (int i = 0; i <= currentSubtasksList.size(); i++) {
-//            allStatuses.add(currentSubtasksList.get(i).getStatus());
-//            if (areAllSubtasksStatusesEqual(allStatuses, "NEW") || currentSubtasksList.size() == 0) {
-//                taskHashMap.get(epicId).setStatus("NEW");
-//            } else if (areAllSubtasksStatusesEqual(allStatuses, "DONE")) {
-//                taskHashMap.get(epicId).setStatus("DONE");
-//            } else {
-//                taskHashMap.get(epicId).setStatus("IN PROGRESS");
-//            }
-//        }
-//    }
-
-
     //Метод выбора варианта 1 или 2 для меню
     public boolean choice(int choice) {
         if (choice == 1) {
@@ -295,7 +251,6 @@ public class TaskManager {
     }
 
     //МЕТОДЫ ДЛЯ ПЕЧАТИ
-
     //Печать списков тикетов
     public void printTasks() {
         for (Task task : getTasksList()) {
