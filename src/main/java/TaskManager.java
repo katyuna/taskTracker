@@ -106,7 +106,6 @@ public class TaskManager {
         }
     }
 
-
     //Удаление подзадачи из Эпика
     public void deleteSubtaskFromEpic(Integer epicId, Integer subtaskId) {
         if (isEpicId(epicId)) {
@@ -213,9 +212,7 @@ public class TaskManager {
 
     public void replaceSubtaskInStorage(Subtask subtask) {
         subtaskHashMap.replace(subtask.getId(), subtask);
-
     }
-
 
     //УПРАВЛЕНИЕ СТАТУСАМИ
     public String checkEpicStatus(Integer epicId) {

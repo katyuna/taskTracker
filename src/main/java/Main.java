@@ -99,7 +99,6 @@ public class Main {
                     Task task = new Task("Task", id, name, description, status);
                     manager.replaceTaskInStorage(task);
                 } else if (manager.isEpicId(id)) {
-                    //System.out.println("Новый статус");
                     String status = manager.checkEpicStatus(id);
                     ArrayList<Subtask> subtasks = manager.getEpicById(id).getListSubtasksInEpic();
                     Epic epic = new Epic("Epic", id, name, description, status, subtasks);
