@@ -4,9 +4,9 @@ public class TaskManager {
     private static Integer currentId = 0;
 
     //Хранилища тикетов
-    HashMap<Integer, Task> taskHashMap = new HashMap<>();
-    HashMap<Integer, Epic> epicHashMap = new HashMap<>();
-    HashMap<Integer, Subtask> subtaskHashMap = new HashMap<>();
+    Map<Integer, Task> taskHashMap = new HashMap<>();
+    Map<Integer, Epic> epicHashMap = new HashMap<>();
+    Map<Integer, Subtask> subtaskHashMap = new HashMap<>();
 
     //Добавление тикетов в хранилище
     public void addTaskToStorage(Task task) {
