@@ -8,9 +8,6 @@ public class Task {
     private String type;
 
     //Конструктор
-    public Task(Integer id) {
-        this.id = id;
-    }
 
     public Task(String type, Integer id, String name, String description, String status) {
         this.type = type;
@@ -77,5 +74,6 @@ public class Task {
     public void setType(String type) {
         this.type = type;
     }
+
 
 }

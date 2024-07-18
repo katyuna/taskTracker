@@ -23,29 +23,18 @@ public class TaskManager {
 
     //Создание новых тикетов
     public Task createTask(String name, String description) {
-        Task task = new Task(currentId++);
-        task.setName(name);
-        task.setDescription(description);
-        task.setStatus("NEW");
-        task.setType("Task");
+        Task task = new Task("Task", currentId++, name,description, "NEW");
         return task;
     }
 
     public Epic createEpic(String name, String description) {
-        Epic epic = new Epic(currentId++);
-        epic.setName(name);
-        epic.setDescription(description);
-        epic.setStatus("NEW");
-        epic.setType("Epic");
+        Epic epic = new Epic("Epic", currentId++, name, description, "NEW", new ArrayList<>());
         return epic;
     }
 
-    public Subtask createSubtask(String name, String description) {
-        Subtask subtask = new Subtask(currentId++);
-        subtask.setName(name);
-        subtask.setDescription(description);
-        subtask.setStatus("NEW");
-        subtask.setType("Subtask");
+    public Subtask createSubtask(String name, String description, Epic epic) {
+
+        Subtask subtask = new Subtask("Subtask", currentId++, name, description, "NEW", epic);
         return subtask;
     }
 

@@ -46,7 +46,7 @@ public class Main {
                         String name = scanner.nextLine();
                         System.out.println("Введите описание Сабтаски");
                         String description = scanner.nextLine();
-                        Subtask subtask = manager.createSubtask(name, description);
+                        Subtask subtask = manager.createSubtask(name, description, manager.getEpicById(epicId));
                         manager.addSubtaskToEpic(epicId, subtask);
                         manager.addSubtaskToStorage(subtask);
                         System.out.println(subtask);
