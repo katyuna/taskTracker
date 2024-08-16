@@ -50,7 +50,7 @@ public class Main {
                         manager.addSubtaskToEpic(epicId, subtask);
                         manager.addSubtaskToStorage(subtask);
                         System.out.println(subtask);
-                        String epicStatus = manager.checkEpicStatus(subtask.getEpic().getId());
+                        Status epicStatus = manager.checkEpicStatus(subtask.getEpic().getId());
                         manager.getEpicById(subtask.getEpic().getId()).setStatus(epicStatus);
                     } else {
                         System.out.println("Нет такого Эпика");
@@ -95,22 +95,22 @@ public class Main {
                 String description = scanner.nextLine();
                 if (manager.isTaskId(id)) {
                     System.out.println("Новый статус");
-                    String status = scanner.nextLine();
+                    Status status = Status.valueOf(scanner.nextLine());
                     Task task = new Task("Task", id, name, description, status);
                     manager.replaceTaskInStorage(task);
                 } else if (manager.isEpicId(id)) {
-                    String status = manager.checkEpicStatus(id);
+                    Status status = manager.checkEpicStatus(id);
                     ArrayList<Subtask> subtasks = manager.getEpicById(id).getListSubtasksInEpic();
                     Epic epic = new Epic("Epic", id, name, description, status, subtasks);
                     manager.replaceEpicInStorage(epic);
                 } else if (manager.isSubtaskId(id)) {
                     System.out.println("Новый статус");
-                    String status = scanner.nextLine();
+                    Status status = Status.valueOf(scanner.nextLine());
                     Epic epic = manager.getSubtaskById(id).getEpic();
                     Subtask subtask = new Subtask("Subtask", id, name, description, status, epic);
                     manager.replaceSubtaskInStorage(subtask);
                     manager.replaceSubtaskInEpic(subtask.getEpic().getId(), subtask);
-                    String epicStatus = manager.checkEpicStatus(subtask.getEpic().getId());
+                    Status epicStatus = manager.checkEpicStatus(subtask.getEpic().getId());
                     manager.getEpicById(subtask.getEpic().getId()).setStatus(epicStatus);
                 }
             } else {

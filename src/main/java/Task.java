@@ -4,12 +4,12 @@ public class Task {
     private final Integer id;
     private String name;
     private String description;
-    private String status;
+    //private String status;
+    private Status status;
     private String type;
 
     //Конструктор
-
-    public Task(String type, Integer id, String name, String description, String status) {
+    public Task(String type, Integer id, String name, String description, Status status) {
         this.type = type;
         this.id = id;
         this.name = name;
@@ -59,11 +59,11 @@ public class Task {
         this.description = description;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
