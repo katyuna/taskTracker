@@ -236,6 +236,24 @@ public class TaskManager {
         return false;
     }
 
+    //Метод выбора статуса
+    public Status statusChoice (int choice){
+        if(choice == 1){
+            Status status = Status.NEW;
+            return status;
+        } else if (choice == 2) {
+            Status status = Status.IN_PROGRESS;
+            return status;
+        } else if (choice == 3) {
+            Status status = Status.DONE;
+            return status;
+        }else {
+            System.out.println("Статус NEW");
+            Status status = Status.NEW;
+            return status;
+        }
+    }
+
     //МЕТОДЫ ДЛЯ ПЕЧАТИ
     //Печать списков тикетов
     public void printTasks() {

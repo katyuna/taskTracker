@@ -94,8 +94,9 @@ public class Main {
                 System.out.println("Новое описание");
                 String description = scanner.nextLine();
                 if (manager.isTaskId(id)) {
-                    System.out.println("Новый статус");
-                    Status status = Status.valueOf(scanner.nextLine());
+                    System.out.println("Новый статус: 1 - NEW, 2 - IN_PROGRESS, 3 - DONE");
+                    Integer choice = scanner.nextInt();
+                    Status status = manager.statusChoice(choice);
                     Task task = new Task("Task", id, name, description, status);
                     manager.replaceTaskInStorage(task);
                 } else if (manager.isEpicId(id)) {
@@ -104,8 +105,9 @@ public class Main {
                     Epic epic = new Epic("Epic", id, name, description, status, subtasks);
                     manager.replaceEpicInStorage(epic);
                 } else if (manager.isSubtaskId(id)) {
-                    System.out.println("Новый статус");
-                    Status status = Status.valueOf(scanner.nextLine());
+                    System.out.println("Новый статус: 1 - NEW, 2 - IN_PROGRESS, 3 - DONE");
+                    Integer choice = scanner.nextInt();
+                    Status status = manager.statusChoice(choice);
                     Epic epic = manager.getSubtaskById(id).getEpic();
                     Subtask subtask = new Subtask("Subtask", id, name, description, status, epic);
                     manager.replaceSubtaskInStorage(subtask);
