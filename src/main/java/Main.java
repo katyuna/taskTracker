@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        InMemoryTaskManager manager = new InMemoryTaskManager();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             printMenu();
@@ -75,7 +75,13 @@ public class Main {
                 //Вывести тикет по id
                 System.out.println("Введите ID.");
                 int id = scanner.nextInt();
-                manager.printIssueById(id);
+                if (manager.isTaskId(id)) {
+                    System.out.println(manager.getTaskById(id));
+                }else if (manager.isEpicId(id)) {
+                    System.out.println(manager.getEpicById(id));
+                }else if (manager.isSubtaskId(id)) {
+                    System.out.println(manager.getSubtaskById(id));
+                }
             } else if (userInput == 10) {
                 //Удалить тикет по id
                 System.out.println("Введите ID тикета для удаления.");
