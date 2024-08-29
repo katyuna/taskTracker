@@ -10,9 +10,7 @@ public interface TaskManager {
     void addSubtaskToStorage(Subtask subtask);
 
     //Получение
-    Task getTaskById(Integer id);
-    Epic getEpicById(Integer id);
-    Subtask getSubtaskById(Integer id);
+    Task getById(Integer id);
 
     //Удаление
     void deleteById(Integer id);

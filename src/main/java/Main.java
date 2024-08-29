@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         InMemoryTaskManager manager = new InMemoryTaskManager();
-        //InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             printMenu();
@@ -76,13 +76,14 @@ public class Main {
                 //Вывести тикет по id
                 System.out.println("Введите ID.");
                 int id = scanner.nextInt();
-                if (manager.isTaskId(id)) {
+                System.out.println(manager.getById(id));
+               /* if (manager.isTaskId(id)) {
                     System.out.println(manager.getTaskById(id));
                 }else if (manager.isEpicId(id)) {
                     System.out.println(manager.getEpicById(id));
                 }else if (manager.isSubtaskId(id)) {
                     System.out.println(manager.getSubtaskById(id));
-                }
+                }*/
             } else if (userInput == 10) {
                 //Удалить тикет по id
                 System.out.println("Введите ID тикета для удаления.");
@@ -123,7 +124,7 @@ public class Main {
                     manager.getEpicById(subtask.getEpic().getId()).setStatus(epicStatus);
                 }
             } else if (userInput == 13){
-                System.out.println(manager.history());
+                System.out.println(manager.historyManager.getHistory());
             }
             else {
                 System.out.println("Выберите вариант из меню.");

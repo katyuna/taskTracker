@@ -3,6 +3,9 @@ import java.util.*;
 public class InMemoryTaskManager implements TaskManager {
     private static Integer currentId = 0;
 
+    // Для работы с историей просмотров
+    HistoryManager historyManager = new InMemoryHistoryManager(new ArrayList<>());
+
     //Хранилища тикетов
     Map<Integer, Task> taskHashMap = new HashMap<>();
     Map<Integer, Epic> epicHashMap = new HashMap<>();
@@ -117,69 +120,35 @@ public class InMemoryTaskManager implements TaskManager {
         return epicValue.getListSubtasksInEpic();
     }
 
-
-    /*START ИСТОРИЯ------------------------------*/
-    //список просмотренных задач
-    List<Task> historyList = new ArrayList<>();
-
-    // Check List Size
-    public boolean checkHistoryListSize(List<Task> list) {
-        if (list.size() < 10) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    //Добавление просмотренной задачи в список
-    public void addTaskToTheHistoryList(List<Task> historyList, Task task) {
-        if (checkHistoryListSize(historyList)) {
-            historyList.add(task);
-        } else {
-            historyList.remove(0);
-            historyList.add(task);
-        }
-    }
-
-    public List<Task> history() {
-        return historyList;
-    }
-
-    /*END ИСТОРИЯ------------------------------*/
-
-
-    //Получение Задачи по id
+    //Получение по id
     @Override
-    public Task getTaskById(Integer id) {
+    public Task getById(Integer id){
         if (isTaskId(id)) {
-            addTaskToTheHistoryList(historyList, taskHashMap.get(id));
+            historyManager.addTask(taskHashMap.get(id));
             return taskHashMap.get(id);
-        }
-        return null;
-    }
-    //Получение Эпика по id
-    @Override
-    public Epic getEpicById(Integer id) {
-        if (isEpicId(id)) {
-            addTaskToTheHistoryList(historyList, epicHashMap.get(id));
+        }else if(isEpicId(id)){
+            historyManager.addTask(epicHashMap.get(id));
             return epicHashMap.get(id);
-        }
-        return null;
-    }
-    //Получение Сабтаски по id
-    @Override
-    public Subtask getSubtaskById(Integer id) {
-        if (isSubtaskId(id)) {
-            addTaskToTheHistoryList(historyList, subtaskHashMap.get(id));
+        }else if(isSubtaskId(id)){
+            historyManager.addTask(subtaskHashMap.get(id));
             return subtaskHashMap.get(id);
         }
         return null;
     }
 
-
-
-
-
+    //Получение эпика и сабтаски для связи между собой и статусов
+    public Epic getEpicById(Integer id) {
+        if (isEpicId(id)) {
+            return epicHashMap.get(id);
+        }
+        return null;
+    }
+    public Subtask getSubtaskById(Integer id) {
+        if (isSubtaskId(id)) {
+            return subtaskHashMap.get(id);
+        }
+        return null;
+    }
 
     //Удаление всех задач
     @Override

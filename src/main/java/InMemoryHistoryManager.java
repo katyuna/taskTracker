@@ -3,15 +3,33 @@ import java.util.List;
 public class InMemoryHistoryManager implements HistoryManager {
     List<Task> historyList;
 
-    //Помечать задачи, как просмотренные
+    public InMemoryHistoryManager(List<Task> historyList) {
+        this.historyList = historyList;
+    }
+
+    // Check List Size
+    public boolean checkHistoryListSize(List<Task> list) {
+        if (list.size() < 10) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //Добавление просмотренной задачи в список
     @Override
     public void addTask(Task task) {
-        historyList.add(task);
+        if (checkHistoryListSize(historyList)) {
+            historyList.add(task);
+        } else {
+            historyList.remove(0);
+            historyList.add(task);
+        }
     }
 
     //Возвращать список просмотренных задач
     @Override
-    public void getHistory() {
-        System.out.println(historyList);
+    public List<Task> getHistory() {
+        return historyList;
     }
 }
