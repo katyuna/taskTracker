@@ -21,7 +21,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
     @Override
     public Subtask createSubtask(String name, String description, Epic epic) {
-
         Subtask subtask = new Subtask("Subtask", currentId++, name, description, Status.NEW, epic);
         return subtask;
     }
@@ -119,10 +118,41 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 
+    /*START ИСТОРИЯ------------------------------*/
+    //список просмотренных задач
+    List<Task> historyList = new ArrayList<>();
+
+    // Check List Size
+    public boolean checkHistoryListSize(List<Task> list) {
+        if (list.size() < 10) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //Добавление просмотренной задачи в список
+    public void addTaskToTheHistoryList(List<Task> historyList, Task task) {
+        if (checkHistoryListSize(historyList)) {
+            historyList.add(task);
+        } else {
+            historyList.remove(0);
+            historyList.add(task);
+        }
+    }
+
+    public List<Task> history() {
+        return historyList;
+    }
+
+    /*END ИСТОРИЯ------------------------------*/
+
+
     //Получение Задачи по id
     @Override
     public Task getTaskById(Integer id) {
         if (isTaskId(id)) {
+            addTaskToTheHistoryList(historyList, taskHashMap.get(id));
             return taskHashMap.get(id);
         }
         return null;
@@ -131,6 +161,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpicById(Integer id) {
         if (isEpicId(id)) {
+            addTaskToTheHistoryList(historyList, epicHashMap.get(id));
             return epicHashMap.get(id);
         }
         return null;
@@ -139,10 +170,16 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtaskById(Integer id) {
         if (isSubtaskId(id)) {
+            addTaskToTheHistoryList(historyList, subtaskHashMap.get(id));
             return subtaskHashMap.get(id);
         }
         return null;
     }
+
+
+
+
+
 
     //Удаление всех задач
     @Override

@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         InMemoryTaskManager manager = new InMemoryTaskManager();
+        //InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             printMenu();
@@ -121,7 +122,10 @@ public class Main {
                     Status epicStatus = manager.checkEpicStatus(subtask.getEpic().getId());
                     manager.getEpicById(subtask.getEpic().getId()).setStatus(epicStatus);
                 }
-            } else {
+            } else if (userInput == 13){
+                System.out.println(manager.history());
+            }
+            else {
                 System.out.println("Выберите вариант из меню.");
             }
         }
@@ -140,6 +144,7 @@ public class Main {
         System.out.println("10 - Удалить по id.");
         System.out.println("11 - Удалить все.");
         System.out.println("12 - Обновить по id.");
+        System.out.println("13 - История просмотров.");
         System.out.println("0 - Выход.");
     }
 }
