@@ -1,10 +1,12 @@
+import java.util.ArrayList;
+
 public class Managers {
     public static TaskManager getDefault() {
-        // TODO: implement
-        return null;
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        return taskManager;
     }
     public static HistoryManager getDefaultHistory() {
-        // TODO: Implement
-        return null;
+        HistoryManager historyManager = new InMemoryHistoryManager(new ArrayList<>());
+        return historyManager;
     }
 }
